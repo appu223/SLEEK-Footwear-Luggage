@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessories Studio · SLEEK® Krishnagiri</title>
+  <meta name="description" content="Small essentials, big confidence. Genuine leather belts, shoe care, travel organizers, and TSA luggage accessories at SLEEK Krishnagiri.">
+
+  <!-- 1. Bootstrap 5.3.3 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- 2. Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Caveat:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- 3. Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 4. GSAP 3.12 & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --color-ink: #111613;
+      --color-paper: #F6F2E8;
+      --color-lime: #C9F900;
+      --color-olive: #8F966F;
+      --color-mist: #DCD9CF;
+      --color-sand: #E8DFCA;
+      --font-display: 'Syne', sans-serif;
+      --font-editorial: 'Bodoni Moda', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-hand: 'Caveat', cursive;
+      --ease-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: 0.005em;
+    }
+
+    .accessory-hero {
+      background:
+        radial-gradient(circle at 78% 18%, rgba(201, 249, 0, 0.2), transparent 28%),
+        radial-gradient(circle at 8% 82%, rgba(0, 211, 255, 0.12), transparent 25%),
+        linear-gradient(120deg, #f6f2e8 0%, #f1ead9 48%, #e8dfca 100%);
+    }
+    .editorial-kicker {
+      font-family: var(--font-editorial);
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    /* Ambient Animated Mesh Background */
+    .ambient-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      will-change: transform;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--color-lime); top: -100px; right: -50px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--color-olive); bottom: 10%; left: -100px; }
+
+    /* Paper texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 99999;
+    }
+
+    .font-display { font-family: var(--font-display); letter-spacing: -0.03em; }
+    .font-hand { font-family: var(--font-hand); }
+
+    /* Navigation */
+    .sleek-header {
+      background: rgba(246, 242, 232, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(17, 22, 19, 0.1);
+      transition: background-color 240ms var(--ease-snappy), box-shadow 240ms var(--ease-snappy), transform 240ms var(--ease-snappy), backdrop-filter 240ms var(--ease-snappy);
+    }
+    .sleek-header.nav-scrolled {
+      background: rgba(246, 242, 232, 0.98);
+      box-shadow: 0 12px 30px rgba(17, 22, 19, 0.1);
+    }
+    .sleek-nav {
+      position: relative;
+      isolation: isolate;
+    }
+    .nav-sliding-pill {
+      position: absolute;
+      left: 0;
+      bottom: -0.45rem;
+      width: 100px;
+      height: 2px;
+      background: var(--color-lime);
+      transform: translate3d(0, 0, 0) scaleX(0);
+      transform-origin: left center;
+      pointer-events: none;
+      z-index: -1;
+      will-change: transform;
+    }
+    .sleek-nav.has-sliding-pill .sleek-nav-link::after {
+      display: none;
+    }
+    .accessories-nav-title {
+      color: var(--color-ink) !important;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .accessories-nav-title svg {
+      color: var(--color-lime);
+      filter: drop-shadow(0 0 5px rgba(201, 249, 0, 0.7));
+    }
+    .sleek-marquee {
+      position: relative;
+      overflow: hidden;
+      color: var(--color-paper);
+      background: #161d19;
+      border-bottom: 1px solid rgba(201, 249, 0, 0.28);
+      isolation: isolate;
+    }
+    .sleek-marquee::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(105deg, rgba(255, 61, 140, 0.18), transparent 34%, rgba(0, 225, 255, 0.14) 68%, rgba(201, 249, 0, 0.16));
+      pointer-events: none;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      min-height: 76px;
+      align-items: center;
+      animation: sleekMarquee 34s linear infinite;
+      will-change: transform;
+    }
+    .sleek-marquee:hover .marquee-track,
+    .sleek-marquee:focus-within .marquee-track {
+      animation-play-state: paused;
+    }
+    .marquee-lane {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0 1.25rem;
+      white-space: nowrap;
+    }
+    .marquee-copy {
+      color: var(--color-lime);
+      font: 800 0.82rem var(--font-sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .marquee-copy strong {
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+    .marquee-media {
+      width: 86px;
+      height: 52px;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 0.7rem;
+      background: #0b0e0c;
+      filter: saturate(1.08) contrast(1.04);
+    }
+    .marquee-media img,
+    .marquee-media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .marquee-media video {
+      filter: saturate(1.12) contrast(1.06);
+    }
+    .marquee-separator {
+      color: #ff4d9a;
+      font-size: 1.3rem;
+    }
+    @keyframes sleekMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .accessory-reel {
+      position: relative;
+      min-height: 480px;
+      overflow: hidden;
+      border: 1px solid rgba(17, 22, 19, 0.14);
+      border-radius: 1.5rem;
+      background: #17201b;
+      box-shadow: 0 24px 60px rgba(17, 22, 19, 0.16);
+      isolation: isolate;
+    }
+    .accessory-reel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(135deg, rgba(201, 249, 0, 0.14), transparent 38%, rgba(255, 66, 151, 0.14) 76%, rgba(0, 213, 255, 0.14));
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .accessory-reel-track {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      transform: translate3d(0, 0, 0);
+      animation: accessoryReel 24s var(--ease-snappy) infinite alternate;
+      will-change: transform;
+    }
+    .accessory-reel-slide {
+      position: relative;
+      width: min(82vw, 440px);
+      min-height: 480px;
+      flex: 0 0 auto;
+    }
+    .accessory-reel-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.06) brightness(0.86);
+    }
+    .accessory-reel-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(17, 22, 19, 0.92), transparent 55%);
+    }
+    .accessory-reel-caption {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 3;
+      color: #fff;
+    }
+    .accessory-reel-caption span {
+      color: var(--color-lime);
+      font: 700 0.68rem var(--font-sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .accessory-reel-caption h4 {
+      transition: color 200ms var(--ease-snappy), transform 200ms var(--ease-snappy);
+    }
+    .accessory-reel:hover .accessory-reel-caption h4 {
+      color: var(--color-lime);
+      transform: translate3d(5px, 0, 0);
+    }
+    .platform-section {
+      position: relative;
+      overflow: hidden;
+      background: #101714;
+      color: var(--color-paper);
+    }
+    .platform-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(201, 249, 0, 0.1), transparent 32%, rgba(0, 215, 255, 0.08) 70%, rgba(255, 63, 150, 0.1));
+      pointer-events: none;
+    }
+    .platform-card {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 1rem;
+      background: rgba(255,255,255,0.06);
+      transition: transform 240ms var(--ease-snappy), border-color 240ms var(--ease-snappy), background-color 240ms var(--ease-snappy);
+    }
+    .platform-card:hover {
+      transform: translate3d(0, -5px, 0);
+      border-color: var(--color-lime);
+      background: rgba(255,255,255,0.1);
+    }
+    .platform-card-image {
+      height: 150px;
+      overflow: hidden;
+    }
+    .platform-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.04);
+      transition: transform 280ms var(--ease-snappy);
+    }
+    .platform-card:hover .platform-card-image img {
+      transform: scale(1.025);
+    }
+    .platform-card h3 {
+      font-family: var(--font-editorial);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: color 200ms var(--ease-snappy), transform 200ms var(--ease-snappy);
+    }
+    .platform-card:hover h3 {
+      color: var(--color-lime);
+      transform: translate3d(5px, 0, 0);
+    }
+    .platform-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-top: -18px;
+      border: 1px solid rgba(17,22,19,0.2);
+      border-radius: 50%;
+      background: var(--color-lime);
+      color: var(--color-ink);
+    }
+    @keyframes accessoryReel {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-28%, 0, 0); }
+    }
+    .sleek-nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(17, 22, 19, 0.75);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy);
+    }
+    .sleek-nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.45rem;
+      height: 2px;
+      background: var(--color-lime);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 220ms var(--ease-snappy);
+    }
+    .sleek-nav-link:hover {
+      color: var(--color-ink);
+      transform: translateY(-1px);
+    }
+    .sleek-nav-link:hover::after,
+    .sleek-nav-link.active::after {
+      transform: scaleX(1);
+    }
+    .sleek-nav-link:hover, .sleek-nav-link.active {
+      color: var(--color-ink);
+    }
+
+    /* Buttons */
+    .btn-lime {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: var(--color-lime);
+      color: var(--color-ink);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.85rem;
+      transition: background-color 220ms var(--ease-snappy), color 220ms var(--ease-snappy), border-color 220ms var(--ease-snappy), transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .btn-lime:hover {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      border-color: var(--color-ink);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -8px rgba(17, 22, 19, 0.25);
+    }
+
+    .btn-sleek-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: transparent;
+      color: var(--color-ink);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(17, 22, 19, 0.35);
+      text-decoration: none;
+      transition: background-color 220ms var(--ease-snappy), color 220ms var(--ease-snappy), border-color 220ms var(--ease-snappy), transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .btn-sleek-outline:hover {
+      background-color: var(--color-ink);
+      color: var(--color-lime);
+      border-color: var(--color-ink);
+      transform: translateY(-2px);
+    }
+
+    /* Lime Highlight */
+    .lime-trace {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .lime-trace::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 6px;
+      width: 100%;
+      height: 12px;
+      background-color: var(--color-lime);
+      z-index: -1;
+    }
+
+    /* Filter Pills */
+    .acc-pill {
+      background: transparent;
+      color: var(--color-ink);
+      border: 1.5px solid rgba(17, 22, 19, 0.25);
+      border-radius: 9999px;
+      padding: 0.5rem 1.35rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 200ms var(--ease-snappy), color 200ms var(--ease-snappy), border-color 200ms var(--ease-snappy), transform 200ms var(--ease-snappy);
+    }
+    .acc-pill.active, .acc-pill:hover {
+      background: var(--color-ink);
+      color: var(--color-lime);
+      border-color: var(--color-ink);
+    }
+
+    /* Accessory Product Cards */
+    .acc-card {
+      background: #fff;
+      border: 1px solid rgba(17, 22, 19, 0.1);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      transition: transform 240ms var(--ease-snappy), box-shadow 240ms var(--ease-snappy);
+    }
+    .acc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 36px -10px rgba(17, 22, 19, 0.12);
+    }
+    .acc-card-img {
+      height: 220px;
+      border-radius: 0.85rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
+      background: var(--color-mist);
+    }
+    .acc-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 280ms var(--ease-snappy);
+    }
+    .acc-card:hover .acc-card-img img {
+      transform: scale(1.025);
+    }
+    .acc-card > div:first-child > .text-muted.font-monospace.small {
+      transition: transform 240ms var(--ease-snappy);
+    }
+    .acc-card:hover > div:first-child > .text-muted.font-monospace.small {
+      transform: translate3d(0, -4px, 0);
+    }
+
+    /* Offcanvas */
+    .offcanvas-sleek {
+      background-color: var(--color-ink) !important;
+      color: var(--color-paper) !important;
+    }
+    .offcanvas-sleek {
+      transition: opacity 300ms var(--ease-snappy);
+    }
+    .offcanvas.showing {
+      opacity: 0;
+    }
+    .offcanvas.show {
+      opacity: 1;
+    }
+    .offcanvas-sleek .offcanvas-header,
+    .offcanvas-sleek .offcanvas-body {
+      transition: opacity 300ms var(--ease-snappy), transform 300ms var(--ease-snappy);
+    }
+    .offcanvas.showing .offcanvas-header,
+    .offcanvas.showing .offcanvas-body {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      #sleekCursor, .nav-sliding-pill, .header-aurora {
+        display: none !important;
+      }
+      .marquee-track {
+        animation: none !important;
+        transform: none !important;
+      }
+      .accessory-reel-track {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP PROMISE STRIP -->
+  <div class="py-2 px-3 text-center text-white" style="background-color: var(--color-ink); font-size: 0.75rem; letter-spacing: 0.05em;">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-2">
+        <span class="rounded-circle d-inline-block" style="width: 8px; height: 8px; background-color: var(--color-lime);"></span>
+        <span class="fw-bold">SLEEK ACCESSORIES STUDIO · 179 BANGALORE RD, KRISHNAGIRI</span>
+      </div>
+      <div class="d-none d-md-flex align-items-center gap-3">
+        <span class="font-hand" style="font-size: 1.1rem; color: var(--color-lime);">“Small essentials, honest everyday craft.”</span>
+        <span style="color: var(--color-olive);">|</span>
+        <a href="index.html" class="text-white text-decoration-underline font-monospace">Back to Flagship Home ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="sticky-top sleek-header py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+      
+      <a href="index.html" class="d-flex align-items-center gap-3 text-decoration-none">
+        <div class="brand-mark d-flex align-items-center justify-content-center rounded-3 overflow-hidden" style="width: 42px; height: 42px; background: var(--color-ink); color: var(--color-lime);">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="SLEEK logo animation" style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="SLEEK_logo_motion_reveal_animation_20260914060859 (1).mp4" type="video/mp4">
+          </video>
+        </div>
+        <div>
+          <span class="font-display fw-bolder d-block lh-1 text-dark" style="font-size: 1.6rem;">SLEEK<span style="font-size: 0.65rem; vertical-align: super;">®</span></span>
+          <span class="text-uppercase fw-semibold d-block" style="font-size: 0.65rem; letter-spacing: 0.15em; color: var(--color-olive);">Accessories Studio</span>
+        </div>
+      </a>
+
+      <nav class="sleek-nav d-none d-lg-flex align-items-center gap-4">
+        <a href="accessories.html" class="sleek-nav-link accessories-nav-title active"><i data-lucide="sparkles" class="me-1" style="width: 16px; height: 16px;"></i>Accessories Studio</a>
+      </nav>
+
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm rounded-circle p-2 position-relative" style="background: rgba(17,22,19,0.06);" data-bs-toggle="offcanvas" data-bs-target="#trialBagOffcanvas" aria-label="Open Bag">
+          <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: var(--color-ink); color: var(--color-lime); font-size: 0.65rem;">3</span>
+        </button>
+
+        <a href="index.html" class="btn btn-sm btn-dark rounded-pill px-3 font-monospace d-none d-sm-inline-block" style="font-size: 0.75rem;">
+          Main Store ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="sleek-marquee" aria-label="SLEEK accessory movement showcase">
+    <div class="marquee-track">
+      <div class="marquee-lane">
+        <span class="marquee-copy"><strong>Small essentials</strong> / big confidence</span>
+        <span class="marquee-separator">+</span>
+        <span class="marquee-media"><img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=240&q=80" alt="Leather belt accessory"></span>
+        <span class="marquee-copy">Leather / <strong>made to age well</strong></span>
+        <span class="marquee-media"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=240&q=80" alt="White sneaker accessory style"></span>
+        <span class="marquee-copy">Shoe care / <strong>keep the step fresh</strong></span>
+        <span class="marquee-media"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=240&q=80" alt="Travel backpack"></span>
+        <span class="marquee-separator">+</span>
+        <span class="marquee-copy">Travel / <strong>pack with intent</strong></span>
+      </div>
+      <div class="marquee-lane" aria-hidden="true">
+        <span class="marquee-copy"><strong>Small essentials</strong> / big confidence</span><span class="marquee-separator">+</span>
+        <span class="marquee-media"><img src="https://images.unsplash.com/photo-1585488433653-4d5e5f3fcb6f?auto=format&fit=crop&w=240&q=80" alt="Travel accessory detail"></span>
+        <span class="marquee-copy">Security / <strong>ready for the route</strong></span>
+        <span class="marquee-media"><img src="https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=240&q=80" alt="Luggage in transit"></span>
+        <span class="marquee-copy">Protection / <strong>travel lighter</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO SECTION WITH AMBIENT BACKGROUND MOTION -->
+  <section class="accessory-hero position-relative py-5 overflow-hidden">
+    <div class="ambient-bg">
+      <div class="ambient-orb orb-1" id="orb1"></div>
+      <div class="ambient-orb orb-2" id="orb2"></div>
+    </div>
+
+    <div class="container py-lg-5 position-relative" style="z-index: 2;">
+      <div class="row align-items-center g-5">
+        
+        <div class="col-lg-7">
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-4" style="background: var(--color-sand); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+            <span class="rounded-circle d-inline-block" style="width: 6px; height: 6px; background: var(--color-ink);"></span>
+            IN-STORE ACCESSIBILITY & FINISHING CRAFT
+          </div>
+
+          <p class="editorial-kicker text-muted mb-2">An edit for the details between destinations.</p>
+
+          <h1 class="font-display fw-bolder text-uppercase lh-1 mb-4 hero-headline" style="font-size: clamp(2.8rem, 5.8vw, 5rem);">
+            <span class="d-block hero-acc-line">Details that</span>
+            <span class="d-block hero-acc-line lime-trace">complete</span>
+            <span class="d-block hero-acc-line">the journey.</span>
+          </h1>
+
+          <p class="lead text-muted mb-4" style="max-width: 540px;">
+            Small essentials designed for everyday durability. Pure grain leather belts, ergonomic memory foam foot insoles, TSA luggage security straps, and moisture-sealed shoe care.
+          </p>
+
+          <div class="d-flex flex-wrap align-items-center gap-3">
+            <a href="#accessory-grid" class="btn-lime">
+              <span>Explore Accessories Floor</span>
+              <i data-lucide="arrow-down-right" style="width: 18px; height: 18px;"></i>
+            </a>
+            <a href="index.html#store" class="btn-sleek-outline">
+              <i data-lucide="map-pin" style="width: 18px; height: 18px; color: var(--color-olive);"></i>
+              <span>Try In Person at Bangalore Rd</span>
+            </a>
+          </div>
+
+          <div class="d-flex flex-wrap gap-4 pt-4 mt-4 border-top text-uppercase fw-bold text-muted small" style="border-color: rgba(17,22,19,0.1) !important;">
+            <div><i class="bi bi-shield-check text-dark me-1"></i> Genuine Leather Tested</div>
+            <div><i class="bi bi-airplane text-dark me-1"></i> TSA International Approved</div>
+            <div><i class="bi bi-tag text-dark me-1"></i> Honest Krishnagiri Tags</div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="accessory-reel mx-auto" aria-label="SLEEK accessory image reel">
+            <div class="accessory-reel-track">
+              <div class="accessory-reel-slide">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_09 AM.png" alt="SLEEK store display">
+                <div class="accessory-reel-caption"><span>01 / The counter</span><h4 class="font-display fw-bold mb-1">The small touches.</h4><p class="small text-white-50 mb-0">Fit, finish, and useful details waiting on the floor.</p></div>
+              </div>
+              <div class="accessory-reel-slide">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" alt="SLEEK leather accessory">
+                <div class="accessory-reel-caption"><span>02 / Material study</span><h4 class="font-display fw-bold mb-1">Carry character.</h4><p class="small text-white-50 mb-0">Everyday pieces with a little more intention.</p></div>
+              </div>
+              <div class="accessory-reel-slide">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="SLEEK travel accessory">
+                <div class="accessory-reel-caption"><span>03 / Travel edit</span><h4 class="font-display fw-bold mb-1">Pack the good stuff.</h4><p class="small text-white-50 mb-0">Small systems that make the long route easier.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="platform-section py-5">
+    <div class="container py-lg-4 position-relative">
+      <div class="row align-items-end mb-4 g-3">
+        <div class="col-lg-7">
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-lime); font-size: 0.72rem;">THE SLEEK ACCESSORY SYSTEM</span>
+          <h2 class="font-display fw-bolder text-uppercase mb-0" style="font-size: clamp(2rem, 4vw, 3.4rem);">One floor. Four ways to move.</h2>
+        </div>
+        <div class="col-lg-5"><p class="text-white-50 mb-0">Choose the layer that makes your everyday route feel more considered: carry, protect, refresh, or prepare.</p></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-3">
+          <article class="platform-card">
+            <div class="platform-card-image"><img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=720&q=82" alt="Leather belts and wallets"></div>
+            <div class="p-3"><span class="platform-icon"><i data-lucide="wallet-cards" style="width: 18px; height: 18px;"></i></span><h3 class="font-display h5 mt-3 mb-1">Carry</h3><p class="small text-white-50 mb-0">Belts and wallets shaped around daily rhythm.</p></div>
+          </article>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <article class="platform-card">
+            <div class="platform-card-image"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=720&q=82" alt="Shoe comfort accessory"></div>
+            <div class="p-3"><span class="platform-icon"><i data-lucide="footprints" style="width: 18px; height: 18px;"></i></span><h3 class="font-display h5 mt-3 mb-1">Refresh</h3><p class="small text-white-50 mb-0">Comfort and care for the shoes already taking you places.</p></div>
+          </article>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <article class="platform-card">
+            <div class="platform-card-image"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=720&q=82" alt="Travel security accessory"></div>
+            <div class="p-3"><span class="platform-icon"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></span><h3 class="font-display h5 mt-3 mb-1">Protect</h3><p class="small text-white-50 mb-0">Travel locks and shields for the route ahead.</p></div>
+          </article>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <article class="platform-card">
+            <div class="platform-card-image"><img src="https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?auto=format&fit=crop&w=720&q=82" alt="Travel packing accessory"></div>
+            <div class="p-3"><span class="platform-icon"><i data-lucide="luggage" style="width: 18px; height: 18px;"></i></span><h3 class="font-display h5 mt-3 mb-1">Prepare</h3><p class="small text-white-50 mb-0">Packing pieces that make room for better plans.</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE ACCESSORIES FILTER BAR -->
+  <section id="accessory-grid" class="py-5" style="background: var(--color-sand);">
+    <div class="container py-lg-3">
+      
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3">
+        <div>
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-olive); font-size: 0.75rem;">CURATED COLLECTIONS</span>
+          <h2 class="font-display fw-bolder text-uppercase mt-1" style="font-size: clamp(2rem, 3.8vw, 3rem);">Accessories On Display</h2>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2" id="accFilterBar">
+          <button class="acc-pill active" data-filter="all">All Essentials</button>
+          <button class="acc-pill" data-filter="leather">Belts & Wallets</button>
+          <button class="acc-pill" data-filter="shoecare">Shoe Care & Soles</button>
+          <button class="acc-pill" data-filter="travel">Travel & TSA</button>
+        </div>
+      </div>
+
+      <!-- Grid of 8 Curated Accessory Items -->
+      <div class="row g-4" id="accGrid">
+        
+        <!-- Item 1: Pure Grain Belt -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="leather">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" alt="Leather Belt">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">FULL GRAIN</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">LEATHER · MEN & WOMEN</span>
+              <h4 class="font-display fw-bold h6 mb-1">Reversible Solid Brass Buckle Belt</h4>
+              <p class="small text-muted mb-0">Dual-sided Black and Tan full-grain leather with rotating buckle.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Sizes: 28 to 44</span>
+              <button onclick="inquireAccessory('Reversible Solid Brass Buckle Belt', 'Belts')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Hold in Store ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Leather Bifold Wallet -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="leather">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_09 AM.png" alt="Leather Wallet">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">RFID PROTECTED</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">WALLET · SLIM PROFILE</span>
+              <h4 class="font-display fw-bold h6 mb-1">Classic Slim Bifold Pocket Wallet</h4>
+              <p class="small text-muted mb-0">8 card slots, quick-access currency divider & RFID-blocking lining.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Coffee / Ink / Olive</span>
+              <button onclick="inquireAccessory('Classic Slim Bifold Wallet', 'Wallets')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Inquire ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: Memory Foam Comfort Insole -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="shoecare">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" alt="Shoe Insole">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">ARCH SUPPORT</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">FOOTWEAR · COMFORT UPGRADE</span>
+              <h4 class="font-display fw-bold h6 mb-1">Dual-Gel Cloud Memory Insoles</h4>
+              <p class="small text-muted mb-0">Trimmable shock-absorbing insoles designed for daily standers and walking.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Cut-to-Fit (6-12)</span>
+              <button onclick="inquireAccessory('Dual-Gel Cloud Memory Insoles', 'Shoecare')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Try at Store ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Travel Packing Cubes -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="travel">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="Packing Cubes">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">4-PIECE SET</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">TRAVEL · COMPRESSION</span>
+              <h4 class="font-display fw-bold h6 mb-1">Ultralight Luggage Packing Cubes</h4>
+              <p class="small text-muted mb-0">Ripstop breathable mesh cubes engineered to double your luggage capacity.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Olive & Carbon</span>
+              <button onclick="inquireAccessory('Ultralight Packing Cubes', 'Travel')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Hold in Store ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5: Premium Shoe Care Cream & Brush -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="shoecare">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_07 AM.png" alt="Shoe Care">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">BEESWAX FORMULA</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">SHOE CARE · RESTORATION</span>
+              <h4 class="font-display fw-bold h6 mb-1">Leather Nourishing Balm & Horsehair Brush</h4>
+              <p class="small text-muted mb-0">Protects leather from cracks and moisture during monsoon weather.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Neutral / Black</span>
+              <button onclick="inquireAccessory('Leather Nourishing Balm Kit', 'Shoecare')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Inquire ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6: Heavy Duty TSA Lock -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="travel">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_57 AM.png" alt="TSA Lock">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">AIRPORT READY</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">LUGGAGE · SECURITY</span>
+              <h4 class="font-display fw-bold h6 mb-1">Steel Cable 3-Dial TSA Combination Lock</h4>
+              <p class="small text-muted mb-0">Flexible zinc-alloy braided cable that loops through multiple luggage zippers.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Universal Fit</span>
+              <button onclick="inquireAccessory('Steel Cable TSA Lock', 'Travel')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Hold in Store ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 7: Handbag Organizer Insert -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="leather">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_35_51 AM.png" alt="Bag Organizer">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">FELT INSERT</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">BAG ACCESSORY · SHAPE RETENTION</span>
+              <h4 class="font-display fw-bold h6 mb-1">Felt Structure Tote Organizer Insert</h4>
+              <p class="small text-muted mb-0">Maintains handbag silhouette with 11 pockets for keys, makeup, and bottles.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Medium & Large</span>
+              <button onclick="inquireAccessory('Felt Structure Tote Insert', 'Accessories')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Inquire ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 8: Waterproof Luggage Dust Cover -->
+        <div class="col-sm-6 col-lg-3 acc-item" data-type="travel">
+          <div class="acc-card">
+            <div>
+              <div class="acc-card-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_35_45 AM.png" alt="Luggage Cover">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">RAIN & DUST</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">TRAVEL · CASE PROTECTION</span>
+              <h4 class="font-display fw-bold h6 mb-1">Spandex Scratch-Shield Luggage Sleeve</h4>
+              <p class="small text-muted mb-0">Elastic washable jacket preventing scuffs and airport conveyor stains.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">20" / 24" / 28"</span>
+              <button onclick="inquireAccessory('Spandex Scratch-Shield Sleeve', 'Travel')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Hold in Store ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STORE INVITATION FOR ACCESSORIES -->
+  <section class="py-5 text-white" style="background-color: var(--color-ink);">
+    <div class="container py-lg-4">
+      <div class="p-4 p-md-5 rounded-4 border border-secondary" style="background: #171f19;">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <span class="badge rounded-pill fw-bold text-dark px-3 py-1 mb-3" style="background: var(--color-lime); font-size: 0.75rem;">
+              FREE IN-STORE FITTING SERVICE
+            </span>
+            <h2 class="font-display fw-bolder text-uppercase text-white" style="font-size: clamp(2rem, 3.5vw, 3rem);">
+              Bring your shoes or bag to the store.
+            </h2>
+            <p class="text-white-50 lead mb-0">
+              Our staff on Bangalore Road will punch custom belt holes, install insole cushioning, or demo luggage packing cubes inside your actual travel piece.
+            </p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <a href="https://maps.google.com/?q=179+Bangalore+Rd+PTU+Colony+Veerappa+Nagar+Krishnagiri+Tamil+Nadu+635002" target="_blank" class="btn-lime">
+              <span>Directions to Flagship</span>
+              <i data-lucide="navigation" style="width: 18px; height: 18px;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5 text-white-50 border-top border-secondary" style="background-color: #0b0e0c;">
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <div class="col-md-6">
+          <span class="font-display fw-bolder text-white h4 d-block">SLEEK<span style="color: var(--color-lime);">®</span></span>
+          <span class="small font-monospace text-uppercase" style="color: var(--color-olive);">Accessories Studio · Krishnagiri</span>
+          <p class="small text-white-50 mt-2">179, Bangalore Rd, PTU Colony, Veerappa Nagar, Krishnagiri, Tamil Nadu 635002</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="index.html" class="btn btn-sm btn-outline-light rounded-pill px-3 font-monospace mb-2">Return to Main Website ↗</a>
+          <span class="d-block small font-monospace text-white-50">Open Daily 9:30 AM – 9:30 PM</span>
+        </div>
+      </div>
+      <div class="border-top border-secondary pt-3 text-center small font-monospace">
+        © 2026 SLEEK® Footwear & Luggages. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- OFFCANVAS TRIAL BAG -->
+  <div class="offcanvas offcanvas-end offcanvas-sleek p-3" tabindex="-1" id="trialBagOffcanvas">
+    <div class="offcanvas-header border-bottom border-secondary pb-3">
+      <div class="d-flex align-items-center gap-2">
+        <i data-lucide="shopping-bag" style="color: var(--color-lime);"></i>
+        <h5 class="offcanvas-title font-display fw-bold text-white mb-0">In-Store Trial List</h5>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between pt-4">
+      <div>
+        <span class="small font-monospace text-muted d-block mb-3">ITEMS SAVED:</span>
+        <div class="p-3 bg-dark rounded-3 border border-secondary mb-2">
+          <strong class="text-white d-block small">Reversible Brass Belt</strong>
+          <span class="text-muted small">Size 34 · In-Store Trial</span>
+        </div>
+        <div class="p-3 bg-dark rounded-3 border border-secondary">
+          <strong class="text-white d-block small">Dual-Gel Cloud Insoles</strong>
+          <span class="text-muted small">Cut-to-Fit · Comfort Cushion</span>
+        </div>
+      </div>
+      <div class="pt-4 border-top border-secondary">
+        <a href="https://wa.me/919876543210?text=Hi%20SLEEK%20Krishnagiri,%20please%20hold%20these%20accessories%20for%20my%20visit." target="_blank" class="btn-lime w-100 py-2.5 text-center">
+          Send Trial Request via WhatsApp ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Link the custom motion engine -->
+  <script src="motion.js"></script>
+
+  <script>
+    lucide.createIcons();
+
+    // Staggered Title
+    gsap.from(".hero-acc-line", {
+      y: 40,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.5,
+      ease: "power3.out"
+    });
+
+    // Accessories Filtering
+    const accPills = document.querySelectorAll('.acc-pill');
+    const accItems = document.querySelectorAll('.acc-item');
+
+    accPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        accPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        const filter = pill.getAttribute('data-filter');
+
+        accItems.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-type') === filter) {
+            item.style.display = 'block';
+            gsap.fromTo(item, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.3 });
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // WhatsApp Inquiry Direct Trigger
+    function inquireAccessory(name, cat) {
+      const text = encodeURIComponent(`Hi SLEEK Krishnagiri, I am interested in holding the accessory: *${name}* (${cat}) at your 179 Bangalore Road store.`);
+      window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
+    }
+  </script>
+</body>
+</html>

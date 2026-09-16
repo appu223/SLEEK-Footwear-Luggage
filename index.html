@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SLEEK® Footwear & Luggages · Krishnagiri Digital Flagship</title>
+  <meta name="description" content="Step into a better version of everyday life. Curated footwear, handbags, luggage, and backpacks at SLEEK, Krishnagiri.">
+
+  <!-- 1. Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 2. Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- 3. Google Fonts: Syne + Plus Jakarta Sans + Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- 4. Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 5. GSAP 3.12 & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM PALETTE (FROM MASTER BRIEF)
+       ========================================================================== */
+    :root {
+      --color-ink: #111613;
+      --color-paper: #F6F2E8;
+      --color-lime: #C9F900;
+      --color-olive: #8F966F;
+      --color-mist: #DCD9CF;
+      --color-sand: #E8DFCA;
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-hand: 'Caveat', cursive;
+      --ease-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      letter-spacing: 0.005em;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Paper Grain Texture Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index: 99999;
+    }
+
+    .font-display { font-family: var(--font-display); letter-spacing: -0.03em; }
+    .font-hand { font-family: var(--font-hand); }
+
+    /* Interactive Action Buttons */
+    .btn-lime {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: var(--color-lime);
+      color: var(--color-ink);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--color-lime);
+      text-decoration: none;
+      transition: background-color 220ms var(--ease-snappy), color 220ms var(--ease-snappy), border-color 220ms var(--ease-snappy), transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .btn-lime:hover {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      border-color: var(--color-ink);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -8px rgba(17, 22, 19, 0.25);
+    }
+
+    .btn-sleek-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: transparent;
+      color: var(--color-ink);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(17, 22, 19, 0.35);
+      text-decoration: none;
+      transition: background-color 220ms var(--ease-snappy), color 220ms var(--ease-snappy), border-color 220ms var(--ease-snappy), transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .btn-sleek-outline:hover {
+      background-color: var(--color-ink);
+      color: var(--color-lime);
+      border-color: var(--color-ink);
+      transform: translateY(-2px);
+    }
+
+    .btn-sleek-outline-white {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: transparent;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      text-decoration: none;
+      transition: background-color 220ms var(--ease-snappy), color 220ms var(--ease-snappy), border-color 220ms var(--ease-snappy), transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .btn-sleek-outline-white:hover {
+      background-color: #fff;
+      color: var(--color-ink);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Lime Underline Highlighter */
+    .lime-trace {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .lime-trace::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 8px;
+      width: 100%;
+      height: 14px;
+      background-color: var(--color-lime);
+      z-index: -1;
+      transform-origin: left;
+    }
+
+    /* Header Nav */
+    .sleek-header {
+      background: rgba(246, 242, 232, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(17, 22, 19, 0.1);
+      transition: background-color 240ms var(--ease-snappy), box-shadow 240ms var(--ease-snappy), transform 240ms var(--ease-snappy), backdrop-filter 240ms var(--ease-snappy);
+    }
+    .sleek-header.nav-scrolled {
+      background: rgba(246, 242, 232, 0.98);
+      box-shadow: 0 12px 30px rgba(17, 22, 19, 0.1);
+    }
+    .sleek-nav {
+      position: relative;
+      isolation: isolate;
+    }
+    .nav-sliding-pill {
+      position: absolute;
+      left: 0;
+      bottom: -0.45rem;
+      width: 100px;
+      height: 2px;
+      background: var(--color-lime);
+      transform: translate3d(0, 0, 0) scaleX(0);
+      transform-origin: left center;
+      pointer-events: none;
+      z-index: -1;
+      will-change: transform;
+    }
+    .sleek-nav.has-sliding-pill .sleek-nav-link::after {
+      display: none;
+    }
+    .sleek-marquee {
+      position: relative;
+      overflow: hidden;
+      color: var(--color-paper);
+      background: #161d19;
+      border-bottom: 1px solid rgba(201, 249, 0, 0.28);
+      isolation: isolate;
+    }
+    .sleek-marquee::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      background: linear-gradient(90deg, #c9f900, #00d9ff, #ff4d9a, #c9f900);
+      background-size: 220% 100%;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: marqueeRgbEdge 8s var(--ease-snappy) infinite alternate;
+      pointer-events: none;
+    }
+    .sleek-marquee::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(105deg, rgba(255, 61, 140, 0.18), transparent 34%, rgba(0, 225, 255, 0.14) 68%, rgba(201, 249, 0, 0.16));
+      pointer-events: none;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      min-height: 76px;
+      align-items: center;
+      animation: sleekMarquee 34s linear infinite;
+      will-change: transform;
+    }
+    .sleek-marquee:hover .marquee-track,
+    .sleek-marquee:focus-within .marquee-track {
+      animation-play-state: paused;
+    }
+    .marquee-lane {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0 1.25rem;
+      white-space: nowrap;
+    }
+    .marquee-copy {
+      color: var(--color-lime);
+      font: 800 0.82rem var(--font-sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .marquee-copy strong {
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+    .marquee-media {
+      width: 86px;
+      height: 52px;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 0.7rem;
+      background: #0b0e0c;
+      filter: saturate(1.08) contrast(1.04);
+    }
+    .marquee-media img,
+    .marquee-media video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .marquee-media video {
+      filter: saturate(1.12) contrast(1.06);
+    }
+    .marquee-media {
+      transition: transform 240ms var(--ease-snappy), border-color 240ms var(--ease-snappy), filter 240ms var(--ease-snappy);
+    }
+    .marquee-media:hover {
+      transform: translate3d(0, -3px, 0) scale(1.04);
+      border-color: var(--color-lime);
+      filter: saturate(1.2) contrast(1.08);
+    }
+    .marquee-separator {
+      color: #ff4d9a;
+      font-size: 1.3rem;
+    }
+    @keyframes sleekMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+    @keyframes marqueeRgbEdge {
+      from { background-position: 0% 50%; }
+      to { background-position: 100% 50%; }
+    }
+    .sleek-nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(17, 22, 19, 0.75);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy);
+    }
+    .sleek-nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.45rem;
+      height: 2px;
+      background: var(--color-lime);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 220ms var(--ease-snappy);
+    }
+    .sleek-nav-link:hover {
+      color: var(--color-ink);
+      transform: translateY(-1px);
+    }
+    .sleek-nav-link:hover::after,
+    .sleek-nav-link.active::after {
+      transform: scaleX(1);
+    }
+    .sleek-nav-link:hover { color: var(--color-ink); }
+
+    /* ==========================================================================
+       FRONT-PAGE 3-VIDEO CINEMA STAGE & AUDIO VISUALIZER
+       ========================================================================== */
+    .triptych-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background-color: #000;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: transform 260ms var(--ease-snappy), border-color 220ms var(--ease-snappy), box-shadow 260ms var(--ease-snappy);
+      cursor: pointer;
+      height: 480px;
+    }
+    .triptych-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--color-lime);
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+    }
+    .triptych-card.active-stream {
+      border-color: var(--color-lime);
+      box-shadow: 0 0 0 3px rgba(201, 249, 0, 0.35), 0 20px 40px -10px rgba(0,0,0,0.6);
+    }
+    .triptych-card.video-punch {
+      animation: videoPunch 320ms var(--ease-spring);
+    }
+    @keyframes videoPunch {
+      0% { transform: scale(1); }
+      55% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    .triptych-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 420ms var(--ease-snappy), filter 260ms var(--ease-snappy);
+    }
+    .triptych-card:hover video {
+      transform: scale(1.025);
+      filter: saturate(1.08) contrast(1.04);
+    }
+    .triptych-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(17,22,19,0.92) 0%, rgba(17,22,19,0.15) 50%, rgba(0,0,0,0.4) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem;
+      pointer-events: none;
+    }
+
+    /* Sound Equalizer Waves */
+    .equalizer-bar {
+      display: inline-block;
+      width: 3px;
+      height: 14px;
+      background-color: var(--color-lime);
+      border-radius: 2px;
+      animation: bounceWave 800ms infinite var(--ease-spring) alternate;
+    }
+    .equalizer-bar:nth-child(2) { animation-delay: 200ms; height: 18px; }
+    .equalizer-bar:nth-child(3) { animation-delay: 400ms; height: 10px; }
+    .equalizer-bar:nth-child(4) { animation-delay: 150ms; height: 16px; }
+    @keyframes bounceWave {
+      0% { transform: scaleY(0.3); }
+      100% { transform: scaleY(1.2); }
+    }
+    .equalizer-paused .equalizer-bar {
+      animation-play-state: paused !important;
+      transform: scaleY(0.4) !important;
+    }
+
+    /* Journey Category Tiles */
+    .journey-tile {
+      background: var(--color-paper);
+      border: 1px solid rgba(17, 22, 19, 0.1);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 240ms var(--ease-snappy), box-shadow 240ms var(--ease-snappy);
+    }
+    .journey-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px -10px rgba(17, 22, 19, 0.14);
+      color: inherit;
+    }
+    .journey-tile-img-box {
+      border-radius: 0.85rem;
+      overflow: hidden;
+      height: 250px;
+      background-color: var(--color-mist);
+      margin: 1rem 0;
+    }
+    .journey-tile-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 280ms var(--ease-snappy);
+    }
+    .journey-tile:hover .journey-tile-img-box img {
+      transform: scale(1.025);
+    }
+    .journey-tile > div:first-child {
+      transition: transform 240ms var(--ease-snappy);
+    }
+    .journey-tile:hover > div:first-child {
+      transform: translate3d(0, -4px, 0);
+    }
+
+    /* Campaign Stories Clip Buttons */
+    .clip-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: left;
+      width: 100%;
+      transition: background-color 200ms var(--ease-snappy), border-color 200ms var(--ease-snappy), transform 200ms var(--ease-snappy);
+      cursor: pointer;
+    }
+    .clip-btn.active {
+      border-color: var(--color-lime);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .clip-btn:hover,
+    .clip-btn:focus-visible {
+      transform: translate3d(0, -3px, 0);
+      border-color: rgba(201, 249, 0, 0.72);
+      background: rgba(255, 255, 255, 0.07);
+      outline: none;
+    }
+
+    .motion-lab-video {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .motion-lab-overlay {
+      inset: 0;
+    }
+
+    /* Filter Pills */
+    .filter-pill {
+      background: transparent;
+      color: var(--color-ink);
+      border: 1px solid rgba(17, 22, 19, 0.2);
+      border-radius: 9999px;
+      padding: 0.45rem 1.15rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 180ms var(--ease-snappy), color 180ms var(--ease-snappy), border-color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy);
+    }
+    .filter-pill.active {
+      background: var(--color-ink);
+      color: var(--color-lime);
+      border-color: var(--color-ink);
+    }
+
+    /* Product Card */
+    .product-box {
+      background: var(--color-paper);
+      border: 1px solid rgba(17, 22, 19, 0.1);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      transition: transform 220ms var(--ease-snappy), box-shadow 220ms var(--ease-snappy);
+    }
+    .product-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(17, 22, 19, 0.12);
+    }
+    .product-box-img {
+      height: 230px;
+      border-radius: 0.85rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      position: relative;
+      background: var(--color-mist);
+    }
+    .product-box-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 280ms var(--ease-snappy), filter 280ms var(--ease-snappy);
+    }
+    .product-box:hover .product-box-img img {
+      transform: scale(1.025);
+      filter: saturate(1.08) contrast(1.04);
+    }
+    .product-box button,
+    .journey-tile button {
+      transition: color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy);
+    }
+    .product-box button:hover,
+    .journey-tile button:hover {
+      color: var(--color-olive) !important;
+      transform: translate3d(0, -2px, 0);
+    }
+
+    /* Offcanvas & Modals */
+    .offcanvas-sleek {
+      background-color: var(--color-ink) !important;
+      color: var(--color-paper) !important;
+    }
+    .modal-content-sleek {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1.5rem;
+    }
+    .offcanvas-sleek,
+    .modal-content-sleek {
+      transition: opacity 300ms var(--ease-snappy), transform 300ms var(--ease-snappy);
+    }
+    .offcanvas.showing,
+    .modal.showing .modal-content-sleek {
+      opacity: 0;
+    }
+    .offcanvas.show,
+    .modal.show .modal-content-sleek {
+      opacity: 1;
+    }
+    .offcanvas-sleek .offcanvas-header,
+    .offcanvas-sleek .offcanvas-body {
+      transition: opacity 300ms var(--ease-snappy), transform 300ms var(--ease-snappy);
+    }
+    .offcanvas.showing .offcanvas-header,
+    .offcanvas.showing .offcanvas-body,
+    .modal.showing .modal-content-sleek {
+      opacity: 0 !important;
+      transform: translate3d(0, 16px, 0);
+    }
+
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--color-ink);
+      color: var(--color-paper);
+    }
+    body.intro-lock {
+      overflow: hidden;
+    }
+    html.skip-intro body {
+      overflow: auto;
+    }
+    html.skip-intro .intro-screen {
+      display: none !important;
+    }
+    .intro-screen.is-exiting {
+      pointer-events: none;
+    }
+    .intro-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+    .intro-screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(17,22,19,0.86) 0%, rgba(17,22,19,0.72) 34%, rgba(17,22,19,0.28) 68%, rgba(17,22,19,0.58) 100%);
+    }
+    .intro-content {
+      position: relative;
+      z-index: 1;
+      justify-self: start;
+      width: min(100% - 2rem, 1120px);
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+    .intro-kicker {
+      color: var(--color-lime);
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+    }
+    .intro-title {
+      max-width: 620px;
+      margin-right: auto;
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: 0.9;
+    }
+    .intro-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .intro-content > p {
+      max-width: 460px;
+    }
+    .intro-skip {
+      position: absolute;
+      right: 2rem;
+      bottom: 1.5rem;
+      z-index: 3;
+      padding: 0.65rem 1rem;
+      color: rgba(246, 242, 232, 0.78);
+      background: transparent;
+      border: 1px solid rgba(246, 242, 232, 0.35);
+      border-radius: 999px;
+      font: 600 0.78rem var(--font-sans);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 180ms var(--ease-snappy), border-color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy), background-color 180ms var(--ease-snappy);
+    }
+    .intro-skip:hover,
+    .intro-skip:focus-visible {
+      color: var(--color-ink);
+      background: var(--color-lime);
+      border-color: var(--color-lime);
+      transform: translate3d(0, -2px, 0);
+      outline: none;
+    }
+    .logo-reveal-frame {
+      position: relative;
+      width: min(100%, 420px);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      background: var(--color-ink);
+      border: 1px solid rgba(17, 22, 19, 0.14);
+      box-shadow: 0 24px 60px rgba(17, 22, 19, 0.18);
+    }
+    .logo-reveal-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .logo-reveal-label {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font: 700 0.7rem var(--font-sans);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 767.98px) {
+      .intro-content {
+        width: min(100% - 2rem, 620px);
+        align-self: end;
+        padding-bottom: 3rem;
+      }
+      .intro-title {
+        max-width: 100%;
+        font-size: clamp(3rem, 15vw, 5rem);
+      }
+      .intro-video {
+        object-position: 62% center;
+      }
+      .intro-screen::after {
+        background: linear-gradient(180deg, rgba(17,22,19,0.48), rgba(17,22,19,0.96) 72%);
+      }
+      .intro-skip {
+        right: 1rem;
+        bottom: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      #sleekCursor, .nav-sliding-pill, .header-aurora {
+        display: none !important;
+      }
+      .marquee-track {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+
+    /* Reference-page editorial motion: scoped to the flagship page only. */
+    .sleek-local-page .sleek-local-trust {
+      position: relative;
+      overflow: hidden;
+      border-top: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(90deg, var(--color-lime), #00d9ff 48%, #ff4d9a) 1;
+      background: linear-gradient(120deg, #e8dfca 0%, #f8f2df 42%, #e3e9c9 72%, #e8dfca 100%) !important;
+      background-size: 180% 180%;
+    }
+    .sleek-local-page .sleek-local-trust > .container {
+      position: relative;
+      z-index: 1;
+    }
+    .sleek-local-page .sleek-local-trust::before {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -120px;
+      top: -150px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(201, 249, 0, 0.34), rgba(0, 217, 255, 0.16), rgba(255, 77, 154, 0.16));
+      filter: blur(24px);
+      pointer-events: none;
+    }
+    .sleek-local-page .sleek-local-trust::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 12% 18%, rgba(0, 217, 255, 0.18), transparent 26%), radial-gradient(circle at 88% 84%, rgba(255, 77, 154, 0.14), transparent 28%);
+      pointer-events: none;
+    }
+    .sleek-journey-section {
+      position: relative;
+      overflow: hidden;
+      color: var(--color-paper);
+      background: linear-gradient(120deg, #101815 0%, #18251f 46%, #111a18 100%) !important;
+    }
+    .sleek-journey-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 12% 18%, rgba(0, 217, 255, 0.2), transparent 28%), radial-gradient(circle at 88% 76%, rgba(255, 77, 154, 0.16), transparent 30%), linear-gradient(105deg, rgba(201, 249, 0, 0.08), transparent 42%);
+      pointer-events: none;
+    }
+    .sleek-journey-section > .container {
+      position: relative;
+      z-index: 1;
+    }
+    .sleek-journey-section .text-muted {
+      color: rgba(246, 242, 232, 0.68) !important;
+    }
+    .sleek-journey-section .journey-tile {
+      color: var(--color-paper);
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(8px);
+    }
+    .sleek-journey-section .journey-tile:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(201, 249, 0, 0.7);
+      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.3);
+    }
+    .sleek-journey-section .journey-tile .text-muted {
+      color: rgba(246, 242, 232, 0.7) !important;
+    }
+    .sleek-journey-section .journey-tile .border-top {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    .sleek-journey-section .journey-tile > div:first-child > div:first-child {
+      color: rgba(246, 242, 232, 0.72) !important;
+    }
+    .sleek-journey-marquee {
+      position: relative;
+      overflow: hidden;
+      width: 100vw;
+      margin: 2rem 0 2.5rem calc(50% - 50vw);
+      border-top: 1px solid rgba(201, 249, 0, 0.35);
+      border-bottom: 1px solid rgba(0, 217, 255, 0.35);
+    }
+    .sleek-journey-marquee-track {
+      display: flex;
+      width: max-content;
+      animation: journeyTextMarquee 24s linear infinite;
+      will-change: transform;
+    }
+    .sleek-journey-marquee:hover .sleek-journey-marquee-track {
+      animation-play-state: paused;
+    }
+    .sleek-journey-marquee-lane {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      padding: 0.85rem 1.6rem;
+      white-space: nowrap;
+    }
+    .sleek-journey-marquee-lane span {
+      color: rgba(246, 242, 232, 0.75);
+      font: 700 0.78rem var(--font-sans);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .sleek-journey-marquee-lane strong {
+      color: var(--color-lime);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+    .sleek-journey-marquee-lane i {
+      color: #ff4d9a;
+      font-style: normal;
+      font-size: 1.2rem;
+    }
+    @keyframes journeyTextMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sleek-journey-marquee-track {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+    .sleek-promise-strip {
+      overflow: hidden;
+    }
+    .sleek-promise-top,
+    .sleek-promise-bottom {
+      will-change: transform, opacity;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sleek-promise-top,
+      .sleek-promise-bottom {
+        will-change: auto;
+      }
+    }
+    .sleek-local-page .sleek-local-image-stage {
+      position: relative;
+      min-height: 570px;
+    }
+    .sleek-local-page .sleek-local-image-card {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid rgba(17, 22, 19, 0.14);
+      border-radius: 1.2rem;
+      background: var(--color-mist);
+      box-shadow: 0 24px 50px rgba(17, 22, 19, 0.14);
+      will-change: transform, opacity;
+    }
+    .sleek-local-page .sleek-local-image-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 420ms var(--ease-snappy), filter 320ms var(--ease-snappy);
+    }
+    .sleek-local-page .sleek-local-image-card:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.08) contrast(1.03);
+    }
+    .sleek-local-page .sleek-local-image-main {
+      top: 54px;
+      left: 0;
+      width: 58%;
+      height: 345px;
+      transform: rotate(-2deg);
+    }
+    .sleek-local-page .sleek-local-image-secondary {
+      top: 0;
+      right: 3%;
+      width: 56%;
+      height: 290px;
+      transform: rotate(2.2deg);
+      z-index: 2;
+    }
+    .sleek-local-page .sleek-local-image-moment {
+      right: 8%;
+      bottom: 18px;
+      width: 35%;
+      height: 170px;
+      transform: rotate(-3deg);
+      z-index: 3;
+    }
+    .sleek-local-page .sleek-local-image-tag {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 4;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid rgba(17, 22, 19, 0.14);
+      border-radius: 999px;
+      background: rgba(246, 242, 232, 0.9);
+      color: var(--color-ink);
+      font: 700 0.65rem var(--font-sans);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .sleek-local-page .sleek-local-heading-line {
+      display: block;
+      clip-path: inset(0 0 100% 0);
+    }
+    .sleek-local-page .sleek-local-card {
+      border: 1px solid rgba(17, 22, 19, 0.1) !important;
+      border-radius: 0.85rem !important;
+      background: rgba(232, 223, 202, 0.82) !important;
+      border-color: rgba(17, 22, 19, 0.2) !important;
+      box-shadow: 0 10px 24px rgba(17, 22, 19, 0.06);
+      transition: transform 240ms var(--ease-snappy), box-shadow 240ms var(--ease-snappy), border-color 240ms var(--ease-snappy);
+    }
+    .sleek-local-page .sleek-local-card:hover {
+      transform: translate3d(0, -6px, 0);
+      border-color: rgba(201, 249, 0, 0.7) !important;
+      box-shadow: 0 18px 32px rgba(17, 22, 19, 0.12);
+    }
+    .sleek-local-page .sleek-local-card strong {
+      transition: color 180ms var(--ease-snappy), transform 180ms var(--ease-snappy);
+    }
+    .sleek-local-page .sleek-local-card:hover strong {
+      color: #5e691f;
+      transform: translate3d(3px, 0, 0);
+    }
+    .sleek-local-page .sleek-local-moments {
+      position: relative;
+      overflow: hidden;
+      margin-top: 3.5rem;
+      border-top: 1px solid rgba(17, 22, 19, 0.14);
+      border-bottom: 1px solid rgba(17, 22, 19, 0.14);
+    }
+    .sleek-local-page .sleek-local-moments-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1rem 0;
+      will-change: transform;
+    }
+    .sleek-local-page .sleek-local-moment-label {
+      flex: 0 0 auto;
+      color: var(--color-ink);
+      font: 800 0.75rem var(--font-sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .sleek-local-page .sleek-local-moment-image {
+      width: 120px;
+      height: 72px;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border-radius: 0.7rem;
+      border: 1px solid rgba(17, 22, 19, 0.15);
+      background: var(--color-mist);
+    }
+    .sleek-local-page .sleek-local-moment-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 260ms var(--ease-snappy);
+    }
+    .sleek-local-page .sleek-local-moment-image:hover img {
+      transform: scale(1.08);
+    }
+    @media (max-width: 767.98px) {
+      .sleek-local-page .sleek-local-image-stage {
+        min-height: 470px;
+      }
+      .sleek-local-page .sleek-local-image-main {
+        width: 64%;
+        height: 290px;
+      }
+      .sleek-local-page .sleek-local-image-secondary {
+        width: 62%;
+        height: 235px;
+      }
+      .sleek-local-page .sleek-local-image-moment {
+        width: 42%;
+        height: 140px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sleek-local-page .sleek-local-image-card,
+      .sleek-local-page .sleek-local-moments-track {
+        will-change: auto;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .sleek-promise-strip .container {
+        justify-content: center !important;
+      }
+      .sleek-promise-top {
+        justify-content: center;
+        text-align: center;
+        font-size: 0.66rem;
+      }
+      .sleek-header {
+        padding-top: 0.7rem !important;
+        padding-bottom: 0.7rem !important;
+      }
+      .sleek-header .container {
+        gap: 0.5rem;
+      }
+      .brand-mark {
+        width: 36px !important;
+        height: 36px !important;
+      }
+      .sleek-header .font-display {
+        font-size: 1.25rem !important;
+      }
+      .sleek-header .text-uppercase.fw-semibold {
+        font-size: 0.55rem !important;
+      }
+      .sleek-marquee .marquee-track {
+        min-height: 62px;
+        animation-duration: 28s;
+      }
+      .sleek-marquee .marquee-lane {
+        gap: 0.75rem;
+        padding: 0 0.75rem;
+      }
+      .sleek-marquee .marquee-copy {
+        font-size: 0.64rem;
+      }
+      .sleek-marquee .marquee-copy strong {
+        font-size: 0.82rem;
+      }
+      .sleek-marquee .marquee-media {
+        width: 64px;
+        height: 40px;
+      }
+      .sleek-journey-marquee-lane {
+        gap: 0.9rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .sleek-journey-marquee-lane span {
+        font-size: 0.62rem;
+      }
+      .sleek-journey-marquee-lane strong {
+        font-size: 0.78rem;
+      }
+      .sleek-local-page .sleek-local-image-stage {
+        min-height: 410px;
+      }
+      .sleek-local-page .sleek-local-image-main {
+        top: 34px;
+        height: 250px;
+      }
+      .sleek-local-page .sleek-local-image-secondary {
+        height: 205px;
+      }
+      .sleek-local-page .sleek-local-image-moment {
+        bottom: 8px;
+        height: 118px;
+      }
+      .triptych-card {
+        height: 390px;
+      }
+      .triptych-overlay {
+        padding: 1rem;
+      }
+      .clip-btn {
+        padding: 0.8rem;
+      }
+      .product-box-img {
+        height: 190px;
+      }
+      .logo-reveal-frame {
+        width: min(100%, 330px);
+      }
+      .sleek-local-moments {
+        margin-top: 2rem !important;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .sleek-header .text-uppercase.fw-semibold {
+        display: none !important;
+      }
+      .sleek-header .btn[aria-label="Open Trial Bag"] {
+        display: none;
+      }
+      .hero-headline {
+        font-size: 2.65rem !important;
+      }
+      .btn-lime,
+      .btn-sleek-outline {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="sleek-local-page intro-lock">
+
+  <script>
+    (() => {
+      const navigation = performance.getEntriesByType("navigation")[0];
+      const isRefresh = navigation?.type === "reload";
+      const hasSeenIntro = sessionStorage.getItem("sleekIntroSeen") === "true";
+
+      if (hasSeenIntro && !isRefresh) {
+        document.documentElement.classList.add("skip-intro");
+      } else {
+        sessionStorage.setItem("sleekIntroSeen", "true");
+      }
+    })();
+  </script>
+
+  <div class="intro-screen" id="introScreen" aria-label="SLEEK brand introduction">
+    <video class="intro-video" id="introVideo" autoplay muted playsinline preload="auto">
+      <source src="Brand_intro_animation_for_footwear_20260914054741 (1).mp4" type="video/mp4">
+    </video>
+    <button type="button" class="intro-skip" id="skipIntro">Skip intro</button>
+  </div>
+
+  <!-- ==========================================================================
+       00 / TOP PROMISE STRIP
+       ========================================================================== -->
+  <div class="sleek-promise-strip py-2 px-3 text-center text-white" style="background-color: var(--color-ink); font-size: 0.75rem; letter-spacing: 0.05em;">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+      <div class="sleek-promise-top d-flex align-items-center gap-2">
+        <span class="rounded-circle d-inline-block" style="width: 8px; height: 8px; background-color: var(--color-lime);"></span>
+        <span class="fw-bold">SLEEK KRISHNAGIRI FLAGSHIP · 179 BANGALORE RD</span>
+      </div>
+      <div class="sleek-promise-bottom d-none d-md-flex align-items-center gap-3">
+        <span class="font-hand" style="font-size: 1.1rem; color: var(--color-lime);">“Good shoes take you good places.”</span>
+        <span style="color: var(--color-olive);">|</span>
+        <span>Daily 9:30 AM – 9:30 PM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       01 / HEADER NAVIGATION
+       ========================================================================== -->
+  <header class="sticky-top sleek-header py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="d-flex align-items-center gap-3 text-decoration-none">
+        <div class="brand-mark d-flex align-items-center justify-content-center rounded-3 overflow-hidden" style="width: 42px; height: 42px; background: var(--color-ink); color: var(--color-lime);">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="SLEEK logo animation" style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="SLEEK_logo_motion_reveal_animation_20260914060859 (1).mp4" type="video/mp4">
+          </video>
+        </div>
+        <div>
+          <span class="font-display fw-bolder d-block lh-1 text-dark" style="font-size: 1.6rem;">SLEEK<span style="font-size: 0.65rem; vertical-align: super;">®</span></span>
+          <span class="text-uppercase fw-semibold d-block" style="font-size: 0.65rem; letter-spacing: 0.15em; color: var(--color-olive);">Footwear & Luggages</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="sleek-nav d-none d-lg-flex align-items-center gap-4">
+        <a href="#front-reels" class="sleek-nav-link text-success fw-bold">Live Store Videos 📹</a>
+        <a href="#footwear" class="sleek-nav-link">Footwear</a>
+        <a href="#handbags" class="sleek-nav-link">Handbags</a>
+        <a href="#luggage" class="sleek-nav-link">Luggage</a>
+        <a href="#backpacks" class="sleek-nav-link">Backpacks</a>
+        <a href="accessories.html" class="sleek-nav-link text-warning fw-bold"><i data-lucide="sparkles" class="me-1" style="width: 15px; height: 15px;"></i>Accessories</a>
+        <a href="#collection-tray" class="sleek-nav-link">In-Store Picks</a>
+        <a href="#store" class="sleek-nav-link d-flex align-items-center gap-2">
+          <span class="rounded-circle d-inline-block" style="width: 7px; height: 7px; background: var(--color-lime); border: 1px solid var(--color-ink);"></span>
+          Visit Krishnagiri
+        </a>
+      </nav>
+
+      <!-- Right Utility Actions -->
+      <div class="d-flex align-items-center gap-2">
+        <button onclick="document.getElementById('collection-tray').scrollIntoView({behavior:'smooth'})" class="btn btn-sm rounded-circle p-2" style="background: rgba(17,22,19,0.06);" aria-label="Search">
+          <i data-lucide="search" style="width: 18px; height: 18px;"></i>
+        </button>
+
+        <!-- Shopping Bag / Trial Tray Trigger -->
+        <button class="btn btn-sm rounded-circle p-2 position-relative" style="background: rgba(17,22,19,0.06);" data-bs-toggle="offcanvas" data-bs-target="#trialBagOffcanvas" aria-label="Open Trial Bag">
+          <i data-lucide="shopping-bag" style="width: 18px; height: 18px;"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: var(--color-ink); color: var(--color-lime); font-size: 0.65rem;">3</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="btn btn-sm d-lg-none p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNavOffcanvas" aria-label="Open Menu">
+          <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <section class="sleek-marquee" aria-label="SLEEK product movement showcase">
+    <div class="marquee-track">
+      <div class="marquee-lane">
+        <span class="marquee-copy"><strong>Move beautifully</strong> / everyday edit</span>
+        <span class="marquee-separator">+</span>
+        <span class="marquee-media"><img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" alt="SLEEK footwear"></span>
+        <span class="marquee-copy">Footwear / <strong>soft landings</strong></span>
+        <span class="marquee-media"><video autoplay muted loop playsinline preload="metadata" aria-label="SLEEK sneaker movement"><source src="Woman_adjusting_white_sneaker_1080p_20260914063816.mp4" type="video/mp4"></video></span>
+        <span class="marquee-copy">Travel / <strong>light in motion</strong></span>
+        <span class="marquee-media"><img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="SLEEK luggage"></span>
+        <span class="marquee-separator">+</span>
+        <span class="marquee-copy">Carry / <strong>your next chapter</strong></span>
+        <span class="marquee-media"><video autoplay muted loop playsinline preload="metadata" aria-label="SLEEK travel movement"><source src="watermark-removed-Woman_pulling_suitcase_at_airport_20260914062800.mp4" type="video/mp4"></video></span>
+      </div>
+      <div class="marquee-lane" aria-hidden="true">
+        <span class="marquee-copy"><strong>Move beautifully</strong> / everyday edit</span><span class="marquee-separator">+</span>
+        <span class="marquee-media"><img src="ChatGPT Image Sep 14, 2026, 05_36_57 AM.png" alt="SLEEK backpacks"></span>
+        <span class="marquee-copy">Backpacks / <strong>ready for anywhere</strong></span>
+        <span class="marquee-media"><img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" alt="SLEEK handbag"></span>
+        <span class="marquee-copy">Handbags / <strong>carry with character</strong></span>
+        <span class="marquee-media"><video autoplay muted loop playsinline preload="metadata" aria-label="SLEEK handbag movement"><source src="Woman_showcasing_fashion_handbag_1080p_20260914063543.mp4" type="video/mp4"></video></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       02 / HERO SECTION WITH CINEMATIC GSAP TEXT
+       ========================================================================== -->
+  <section class="pt-5 pb-4 overflow-hidden">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        
+        <div class="col-lg-8">
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: var(--color-sand); font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+            <span class="rounded-circle d-inline-block" style="width: 6px; height: 6px; background: var(--color-ink);"></span>
+            Digital Flagship Direction / 01 · Krishnagiri
+          </div>
+
+          <h1 class="font-display fw-bolder text-uppercase lh-1 mb-3 hero-headline" style="font-size: clamp(2.8rem, 6.2vw, 5.4rem);">
+            <span class="d-block hero-line">Style</span>
+            <span class="d-block hero-line lime-trace">moves</span>
+            <span class="d-block hero-line">with you.</span>
+          </h1>
+
+          <p class="hero-subtext text-muted mb-4 lead" style="max-width: 580px; font-size: 1.15rem;">
+            A human, cinematic retail experience for SLEEK—made with tactile warmth, motion, and honest craft for daily journeys across Krishnagiri.
+          </p>
+
+          <div class="hero-actions d-flex flex-wrap align-items-center gap-3">
+            <a href="#front-reels" class="btn-lime">
+              <span>Watch Store Videos With Voice</span>
+              <i data-lucide="volume-2" style="width: 18px; height: 18px;"></i>
+            </a>
+            <a href="#store" class="btn-sleek-outline">
+              <i data-lucide="map-pin" style="width: 18px; height: 18px; color: var(--color-olive);"></i>
+              <span>Visit SLEEK, Krishnagiri</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 text-center text-lg-end">
+          <div class="logo-reveal-frame d-inline-block text-start">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="SLEEK_logo_motion_reveal_animation_20260914060859 (1).mp4" type="video/mp4">
+            </video>
+            <div class="logo-reveal-label">
+              <span>Identity in motion</span>
+              <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       03 / FRONT-PAGE TRIPLE VIDEO STAGE: WITH VOICE & CONTINUOUS LOOP
+       ========================================================================== -->
+  <section id="front-reels" class="py-5 text-white" style="background-color: var(--color-ink);">
+    <div class="container py-lg-3">
+      
+      <!-- Video Stage Header & Global Audio Unmute Controller -->
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 gsap-fade-up">
+        <div>
+          <div class="d-inline-flex align-items-center gap-2 font-monospace fw-bold mb-2" style="color: var(--color-lime); font-size: 0.75rem;">
+            <span class="rounded-circle d-inline-block" style="width: 8px; height: 8px; background: var(--color-lime);"></span>
+            FRONT PAGE CINEMA · 3 LOCAL STORE VIDEOS
+          </div>
+          <h2 class="font-display fw-bolder text-uppercase mt-1 text-white" style="font-size: clamp(2rem, 4vw, 3.2rem);">
+            Experience SLEEK with Voice & Motion.
+          </h2>
+          <p class="text-white-50 lead mb-0" style="max-width: 620px;">
+            Continuous looping audio-visual stage. Click any video to spotlight its sound, or use the master voice toggle below:
+          </p>
+        </div>
+
+        <!-- Master Sound Bar With Equalizer -->
+        <div class="d-flex align-items-center gap-3 bg-dark p-3 rounded-4 border border-secondary">
+          <div class="d-flex align-items-end gap-1 equalizer-paused" id="soundWaves">
+            <span class="equalizer-bar"></span>
+            <span class="equalizer-bar"></span>
+            <span class="equalizer-bar"></span>
+            <span class="equalizer-bar"></span>
+          </div>
+
+          <button id="masterSoundToggle" class="btn btn-sm btn-lime px-3 py-2 fw-bold font-monospace d-flex align-items-center gap-2" style="font-size: 0.78rem;">
+            <i class="bi bi-volume-mute-fill fs-6" id="masterSoundIcon"></i>
+            <span id="masterSoundLabel">ENABLE IN-STORE VOICE / AUDIO</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- The 3 WhatsApp Local Videos Triptych Grid -->
+      <div class="row g-4" id="triptychRow">
+        
+        <!-- Video 1: Storefront Entrance -->
+        <div class="col-md-4">
+          <div class="triptych-card active-stream shadow-lg" id="cardReel1" onclick="selectVideoReel(1)">
+            <video id="vidReel1" loop playsinline muted autoplay class="w-100 h-100 object-fit-cover">
+              <source src="WhatsApp Video 2026-09-15 at 5.39.23 AM.mp4" type="video/mp4">
+            </video>
+
+            <div class="triptych-overlay">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge rounded-pill fw-bold" style="background: var(--color-lime); color: var(--color-ink); font-size: 0.7rem;">
+                  01 · STOREFRONT ARRIVAL
+                </span>
+                <span class="sound-indicator badge bg-dark border border-secondary font-monospace" style="font-size: 0.65rem;">
+                  <i class="bi bi-volume-up-fill text-warning me-1"></i> SOUND READY
+                </span>
+              </div>
+
+              <div>
+                <span class="font-monospace small text-white-50 d-block">BANGALORE ROAD</span>
+                <h4 class="font-display fw-bold text-white mb-1">Storefront & Entrance</h4>
+                <p class="small text-white-50 mb-2">Direct exterior view with customer bike and car parking.</p>
+                <div class="progress" style="height: 3px; background: rgba(255,255,255,0.2);">
+                  <div class="progress-bar bg-warning" id="prog1" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video 2: Store Team Welcome -->
+        <div class="col-md-4">
+          <div class="triptych-card shadow-lg" id="cardReel2" onclick="selectVideoReel(2)">
+            <video id="vidReel2" loop playsinline muted autoplay class="w-100 h-100 object-fit-cover">
+              <source src="WhatsApp Video 2026-09-15 at 5.39.41 AM.mp4" type="video/mp4">
+            </video>
+
+            <div class="triptych-overlay">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge rounded-pill fw-bold" style="background: var(--color-lime); color: var(--color-ink); font-size: 0.7rem;">
+                  02 · OUR TEAM
+                </span>
+                <span class="sound-indicator badge bg-dark border border-secondary font-monospace" style="font-size: 0.65rem;">
+                  <i class="bi bi-volume-mute-fill text-muted me-1"></i> CLICK TO HEAR
+                </span>
+              </div>
+
+              <div>
+                <span class="font-monospace small text-white-50 d-block">KRISHNAGIRI TEAM</span>
+                <h4 class="font-display fw-bold text-white mb-1">Meet The Associates</h4>
+                <p class="small text-white-50 mb-2">Warm, personalized fitting help without any sales pressure.</p>
+                <div class="progress" style="height: 3px; background: rgba(255,255,255,0.2);">
+                  <div class="progress-bar bg-warning" id="prog2" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video 3: Customer Walking & Fitting -->
+        <div class="col-md-4">
+          <div class="triptych-card shadow-lg" id="cardReel3" onclick="selectVideoReel(3)">
+            <video id="vidReel3" loop playsinline muted autoplay class="w-100 h-100 object-fit-cover">
+              <source src="WhatsApp Video 2026-09-15 at 5.39.24 AM.mp4" type="video/mp4">
+            </video>
+
+            <div class="triptych-overlay">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge rounded-pill fw-bold" style="background: var(--color-lime); color: var(--color-ink); font-size: 0.7rem;">
+                  03 · WALK & COMFORT TEST
+                </span>
+                <span class="sound-indicator badge bg-dark border border-secondary font-monospace" style="font-size: 0.65rem;">
+                  <i class="bi bi-volume-mute-fill text-muted me-1"></i> CLICK TO HEAR
+                </span>
+              </div>
+
+              <div>
+                <span class="font-monospace small text-white-50 d-block">FLOOR TRIAL</span>
+                <h4 class="font-display fw-bold text-white mb-1">Aisles & Sole Flex</h4>
+                <p class="small text-white-50 mb-2">Spacious air-conditioned floor to test shoe sole cushion.</p>
+                <div class="progress" style="height: 3px; background: rgba(255,255,255,0.2);">
+                  <div class="progress-bar bg-warning" id="prog3" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Control Helper Note -->
+      <div class="mt-4 p-3 rounded-3 bg-dark border border-secondary d-flex flex-column flex-sm-row justify-content-between align-items-center small text-white-50">
+        <div>
+          <i class="bi bi-info-circle-fill text-warning me-2"></i>
+          <span>Videos run in synchronized high-definition loop. Tap any card to switch the active audio stream.</span>
+        </div>
+        <button onclick="expandActiveReelModal()" class="btn btn-link text-warning text-decoration-none fw-bold small p-0 mt-2 mt-sm-0">
+          Open Fullscreen Theater ↗
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       04 / LIVE IST CLOCK STRIP
+       ========================================================================== -->
+  <section class="py-3 border-top border-bottom" style="background: var(--color-sand); border-color: rgba(17,22,19,0.1) !important;">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <span id="storePulseDot" class="rounded-circle d-inline-block" style="width: 10px; height: 10px; background: #16a34a;"></span>
+        <span id="storeStatusLabel" class="fw-bold font-monospace text-uppercase" style="font-size: 0.8rem;">Checking Krishnagiri Store Hours...</span>
+        <span class="text-muted small d-none d-lg-inline">| Veerappa Nagar, Bangalore Rd</span>
+      </div>
+      <div class="d-flex align-items-center gap-3 small font-monospace">
+        <span><i class="bi bi-geo-alt-fill text-dark me-1"></i> 179 Bangalore Rd</span>
+        <span>·</span>
+        <a href="#store" class="text-dark fw-bold text-decoration-underline">Store Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       05 / CHOOSE YOUR JOURNEY: 4 CORE CATEGORIES (GSAP TRIGGERED)
+       ========================================================================== -->
+  <section id="journeys" class="sleek-journey-section py-5">
+    <div class="container py-lg-4">
+      
+      <div class="row align-items-end mb-5 g-3 gsap-fade-up">
+        <div class="col-md-7">
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-olive); font-size: 0.75rem;">02 / CHOOSE YOUR JOURNEY</span>
+          <h2 class="font-display fw-bolder text-uppercase mt-1" style="font-size: clamp(2rem, 4vw, 3.2rem);">One store. Every kind of journey.</h2>
+        </div>
+        <div class="col-md-5">
+          <p class="text-muted mb-0">Curated for purpose. Walk into a collection structured around how you live, travel, and move.</p>
+        </div>
+      </div>
+
+      <!-- 4 Category Tiles -->
+      <div class="row g-4">
+        
+        <!-- Tile 1: Footwear -->
+        <div class="col-md-6 col-lg-3 gsap-card" id="footwear">
+          <a href="#collection-tray" class="journey-tile">
+            <div>
+              <div class="d-flex justify-content-between font-monospace text-muted small mb-2">
+                <span>01 / STEP BETTER</span>
+                <span class="rounded-circle" style="width: 7px; height: 7px; background: var(--color-ink);"></span>
+              </div>
+              <h3 class="font-display fw-bold h4 mb-1">Footwear</h3>
+              <p class="small text-muted mb-0">Everyday sneakers, boardroom formals, sandals & comfort slides.</p>
+            </div>
+            <div class="journey-tile-img-box">
+              <img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" alt="SLEEK Footwear">
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+              <span class="small fw-bold text-uppercase">Explore Shoes</span>
+              <span class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--color-ink); color: var(--color-lime);">↗</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Tile 2: Handbags -->
+        <div class="col-md-6 col-lg-3 gsap-card" id="handbags">
+          <a href="#collection-tray" class="journey-tile">
+            <div>
+              <div class="d-flex justify-content-between font-monospace text-muted small mb-2">
+                <span>02 / CARRY STORY</span>
+                <span class="rounded-circle" style="width: 7px; height: 7px; background: var(--color-ink);"></span>
+              </div>
+              <h3 class="font-display fw-bold h4 mb-1">Handbags</h3>
+              <p class="small text-muted mb-0">Totes, satchels, sling bags & party clutches with durable straps.</p>
+            </div>
+            <div class="journey-tile-img-box">
+              <img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" alt="SLEEK Handbags">
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+              <span class="small fw-bold text-uppercase">Explore Bags</span>
+              <span class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--color-ink); color: var(--color-lime);">↗</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Tile 3: Luggage -->
+        <div class="col-md-6 col-lg-3 gsap-card" id="luggage">
+          <a href="#collection-tray" class="journey-tile">
+            <div>
+              <div class="d-flex justify-content-between font-monospace text-muted small mb-2">
+                <span>03 / TRAVEL IN STYLE</span>
+                <span class="rounded-circle" style="width: 7px; height: 7px; background: var(--color-ink);"></span>
+              </div>
+              <h3 class="font-display fw-bold h4 mb-1">Luggage</h3>
+              <p class="small text-muted mb-0">Featherweight 360° spinners, check-in cases & weekenders.</p>
+            </div>
+            <div class="journey-tile-img-box">
+              <img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="SLEEK Luggage">
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+              <button onclick="event.preventDefault(); openLuggageSizer();" class="btn p-0 small fw-bold text-uppercase border-0">Airline Sizer 📐</button>
+              <span class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--color-ink); color: var(--color-lime);">↗</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Tile 4: Backpacks -->
+        <div class="col-md-6 col-lg-3 gsap-card" id="backpacks">
+          <a href="#collection-tray" class="journey-tile">
+            <div>
+              <div class="d-flex justify-content-between font-monospace text-muted small mb-2">
+                <span>04 / COMMUTE & PACK</span>
+                <span class="rounded-circle" style="width: 7px; height: 7px; background: var(--color-ink);"></span>
+              </div>
+              <h3 class="font-display fw-bold h4 mb-1">Backpacks</h3>
+              <p class="small text-muted mb-0">Laptop-ready commuter packs with sweat-resistant airflow channels.</p>
+            </div>
+            <div class="journey-tile-img-box">
+              <img src="ChatGPT Image Sep 14, 2026, 05_36_57 AM.png" alt="SLEEK Backpacks">
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+              <span class="small fw-bold text-uppercase">Explore Packs</span>
+              <span class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: var(--color-ink); color: var(--color-lime);">↗</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="sleek-journey-marquee" aria-label="SLEEK journey categories">
+        <div class="sleek-journey-marquee-track">
+          <div class="sleek-journey-marquee-lane">
+            <span><strong>STEP BETTER</strong> / Footwear for daily movement</span><i>+</i>
+            <span><strong>CARRY STORY</strong> / Handbags with character</span><i>+</i>
+            <span><strong>TRAVEL IN STYLE</strong> / Luggage for the long route</span><i>+</i>
+            <span><strong>COMMUTE & PACK</strong> / Backpacks ready for anywhere</span>
+          </div>
+          <div class="sleek-journey-marquee-lane" aria-hidden="true">
+            <span><strong>STEP BETTER</strong> / Footwear for daily movement</span><i>+</i>
+            <span><strong>CARRY STORY</strong> / Handbags with character</span><i>+</i>
+            <span><strong>TRAVEL IN STYLE</strong> / Luggage for the long route</span><i>+</i>
+            <span><strong>COMMUTE & PACK</strong> / Backpacks ready for anywhere</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       06 / CAMPAIGN STORIES: 4 SUPPLEMENTAL VIDEOS IN MOTION LAB
+       ========================================================================== -->
+  <section class="py-5 text-white" style="background-color: var(--color-ink);">
+    <div class="container py-lg-4">
+      
+      <div class="row mb-5 gsap-fade-up">
+        <div class="col-lg-8">
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-lime); font-size: 0.75rem;">03 / PRODUCT MOVEMENT LAB</span>
+          <h2 class="font-display fw-bolder text-uppercase mt-1" style="font-size: clamp(2rem, 4.5vw, 3.4rem);">Tested on Everyday Surfaces.</h2>
+          <p class="text-white-50 lead mb-0">Sneakers on asphalt, suitcase spinners on railway platforms, and reinforced bags under full carry weight.</p>
+        </div>
+      </div>
+
+      <div class="row g-4 align-items-center">
+        
+        <div class="col-lg-8">
+          <div class="position-relative rounded-4 overflow-hidden shadow-lg border border-secondary" style="aspect-ratio: 16/9; background: #000;" id="motionLabWrapper">
+            <video id="stageVideo" class="motion-lab-video" src="Woman_adjusting_white_sneaker_1080p_20260914063816.mp4" poster="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" loop playsinline muted></video>
+
+            <div class="position-absolute motion-lab-overlay d-flex flex-column justify-content-between p-4 p-md-5 pointer-events-none" style="background: linear-gradient(0deg, rgba(17,22,19,0.95) 0%, rgba(17,22,19,0.1) 60%, rgba(0,0,0,0.5) 100%);">
+              <div class="d-flex justify-content-between align-items-center">
+                <span id="videoBadge" class="badge rounded-pill fw-bold text-dark px-3 py-2" style="background: var(--color-lime); font-size: 0.75rem;">FOOTWEAR: SNEAKER CUSHIONING</span>
+                <button id="muteBtn" class="btn btn-sm btn-dark rounded-circle p-2 border border-white-50 pointer-events-auto" aria-label="Toggle Sound">
+                  <i class="bi bi-volume-mute-fill" id="muteIcon"></i>
+                </button>
+              </div>
+
+              <div>
+                <button id="playBtn" class="btn rounded-circle d-flex align-items-center justify-content-center mb-3 pointer-events-auto shadow" style="width: 58px; height: 58px; background: var(--color-lime); color: var(--color-ink);" aria-label="Play/Pause">
+                  <i class="bi bi-play-fill fs-3" id="playIcon"></i>
+                </button>
+                <h3 id="videoTitle" class="font-display fw-bold text-white mb-1">Morning commutes on Bangalore Road</h3>
+                <p id="videoDesc" class="text-white-50 small mb-0" style="max-width: 520px;">Lightweight flexible construction designed for easy transitions between street asphalt and retail floor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 d-flex flex-column gap-3">
+          <button class="clip-btn active" 
+                  data-src="Woman_adjusting_white_sneaker_1080p_20260914063816.mp4" 
+                  data-poster="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png"
+                  data-badge="FOOTWEAR: SNEAKER CUSHIONING"
+                  data-title="Morning commutes on Bangalore Road"
+                  data-desc="Lightweight flexible construction designed for easy transitions between street asphalt and retail floor.">
+            <span class="d-block font-monospace small" style="color: var(--color-lime); font-size: 0.72rem;">CLIP 01 · 1080P</span>
+            <strong class="d-block text-white font-display">Woman Adjusting White Sneaker</strong>
+            <span class="text-white-50 small">Footwear agility & daily flexibility</span>
+          </button>
+
+          <button class="clip-btn" 
+                  data-src="watermark-removed-Woman_pulling_suitcase_at_airport_20260914062800.mp4" 
+                  data-poster="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png"
+                  data-badge="LUGGAGE: 360° SPINNER BALANCE"
+                  data-title="Smooth spinner wheels on uneven ground"
+                  data-desc="Airport-ready hard case luggage with resilient multi-directional wheels tested on rough platforms.">
+            <span class="d-block font-monospace small" style="color: var(--color-olive); font-size: 0.72rem;">CLIP 02 · 8 SECONDS</span>
+            <strong class="d-block text-white font-display">Pulling Suitcase on Journey</strong>
+            <span class="text-white-50 small">Featherlight travel glide test</span>
+          </button>
+
+          <button class="clip-btn" 
+                  data-src="Woman_showcasing_fashion_handbag_1080p_20260914063543.mp4" 
+                  data-poster="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png"
+                  data-badge="HANDBAG: TEXTURE & STRAP DROP"
+                  data-title="Comfort shoulder drop & premium stitch"
+                  data-desc="Structured satchels that carry your daily world gracefully without pinching your shoulder.">
+            <span class="d-block font-monospace small" style="color: var(--color-olive); font-size: 0.72rem;">CLIP 03 · 1080P</span>
+            <strong class="d-block text-white font-display">Showcasing Fashion Handbag</strong>
+            <span class="text-white-50 small">Warmth, elegance & real weight balance</span>
+          </button>
+
+          <button class="clip-btn" 
+                  data-src="Influencer_showcasing_SLEEK_backpack_1080p_20260914062034 (1).mp4" 
+                  data-poster="ChatGPT Image Sep 14, 2026, 05_36_57 AM.png"
+                  data-badge="BACKPACK: ERGONOMIC TECH SLEEVE"
+                  data-title="Laptop security with airflow spine channel"
+                  data-desc="Built for travelers and commuters moving between bus terminals and office hubs.">
+            <span class="d-block font-monospace small" style="color: var(--color-olive); font-size: 0.72rem;">CLIP 04 · INFLUENCER REEL</span>
+            <strong class="d-block text-white font-display">Influencer Showcasing SLEEK Pack</strong>
+            <span class="text-white-50 small">Commute & weekend escape readiness</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       07 / INTERACTIVE FILTER TRAY: IN-STORE PRODUCT PICKS
+       ========================================================================== -->
+  <section id="collection-tray" class="py-5">
+    <div class="container py-lg-4">
+      
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 gap-3 gsap-fade-up">
+        <div>
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-olive); font-size: 0.75rem;">CURATED FLOOR PICKS</span>
+          <h2 class="font-display fw-bolder text-uppercase mt-1" style="font-size: clamp(2rem, 3.8vw, 3rem);">Featured In-Store Today.</h2>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2" id="filterPills">
+          <button class="filter-pill active" data-cat="all">All Items</button>
+          <button class="filter-pill" data-cat="footwear">Footwear</button>
+          <button class="filter-pill" data-cat="handbags">Handbags</button>
+          <button class="filter-pill" data-cat="luggage">Luggage</button>
+          <button class="filter-pill" data-cat="backpacks">Backpacks</button>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="row g-4" id="productsRow">
+        
+        <div class="col-sm-6 col-lg-3 product-item" data-category="footwear">
+          <div class="product-box">
+            <div>
+              <div class="product-box-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" alt="SLEEK Urban Walker">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">IN-STORE FIT</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">FOOTWEAR · SNEAKERS</span>
+              <h4 class="font-display fw-bold h6 mb-1">SLEEK Urban Walker Sneaker</h4>
+              <p class="small text-muted mb-0">Soft EVA midsole designed for asphalt and market walks.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Sizes 6 to 11</span>
+              <button onclick="inquireOnWhatsApp('SLEEK Urban Walker Sneaker', 'Footwear')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Check Size ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 product-item" data-category="handbags">
+          <div class="product-box">
+            <div>
+              <div class="product-box-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" alt="SLEEK Tote">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">NEW ARRIVAL</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">HANDBAGS · CLASSIC TOTE</span>
+              <h4 class="font-display fw-bold h6 mb-1">Structured Work & Daily Satchel</h4>
+              <p class="small text-muted mb-0">Reinforced handles with dedicated zip phone chambers.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">Sand / Olive / Black</span>
+              <button onclick="inquireOnWhatsApp('Structured Work & Daily Satchel', 'Handbags')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Inquire ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 product-item" data-category="luggage">
+          <div class="product-box">
+            <div>
+              <div class="product-box-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="AeroGlide 360">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">CABIN PIECE</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">LUGGAGE · HARDSHELL</span>
+              <h4 class="font-display fw-bold h6 mb-1">AeroGlide 360° Spinner Hardcase</h4>
+              <p class="small text-muted mb-0">Resilient grooved shell with integrated TSA lock.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <button onclick="openLuggageSizer()" class="btn p-0 small text-decoration-underline border-0 font-monospace text-muted" style="font-size: 0.75rem;">Airline Limits</button>
+              <button onclick="inquireOnWhatsApp('AeroGlide 360 Spinner Hardcase', 'Luggage')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Hold ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 product-item" data-category="backpacks">
+          <div class="product-box">
+            <div>
+              <div class="product-box-img">
+                <img src="ChatGPT Image Sep 14, 2026, 05_36_57 AM.png" alt="Explorer Backpack">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-dark text-warning font-monospace" style="font-size: 0.65rem;">BESTSELLER</span>
+              </div>
+              <span class="text-muted font-monospace small d-block">BACKPACKS · LAPTOP</span>
+              <h4 class="font-display fw-bold h6 mb-1">Explorer All-Terrain Laptop Pack</h4>
+              <p class="small text-muted mb-0">Padded 15.6" laptop sleeve with back airflow channel.</p>
+            </div>
+            <div class="pt-3 mt-3 border-top d-flex justify-content-between align-items-center">
+              <span class="small font-monospace text-muted">28 Litres</span>
+              <button onclick="inquireOnWhatsApp('Explorer All-Terrain Laptop Pack', 'Backpacks')" class="btn btn-sm btn-dark rounded-pill px-3 py-1 font-monospace" style="font-size: 0.75rem;">
+                Inquire ↗
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       08 / STORE PHILOSOPHY & LOCAL TRUST
+       ========================================================================== -->
+  <section class="sleek-local-trust py-5" style="background: var(--color-sand);">
+    <div class="container py-lg-4">
+      <div class="row align-items-center g-5">
+        
+        <div class="col-lg-6">
+          <div class="sleek-local-image-stage">
+            <div class="sleek-local-image-card sleek-local-image-main">
+              <img src="ChatGPT Image Sep 14, 2026, 05_36_07 AM.png" alt="SLEEK team member in the store" loading="lazy">
+            </div>
+            <div class="sleek-local-image-card sleek-local-image-secondary">
+              <img src="ChatGPT Image Sep 14, 2026, 05_35_51 AM.png" alt="SLEEK shoppers browsing accessories" loading="lazy">
+            </div>
+            <div class="sleek-local-image-card sleek-local-image-moment">
+              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=640&q=80" alt="Premium retail shopping moment" loading="lazy" onerror="this.onerror=null;this.src='ChatGPT Image Sep 14, 2026, 05_36_32 AM.png';">
+            </div>
+            <span class="sleek-local-image-tag">Human retail / Krishnagiri</span>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <span class="text-uppercase fw-bold font-monospace" style="color: var(--color-olive); font-size: 0.75rem;">04 / LOCAL PRESENCE & TRUST</span>
+          <h2 class="sleek-local-heading font-display fw-bolder text-uppercase mt-1" style="font-size: clamp(2rem, 4vw, 3rem);"><span class="sleek-local-heading-line">Human,</span><span class="sleek-local-heading-line">not synthetic.</span></h2>
+          <p class="sleek-local-story lead text-muted mb-4">Walk into SLEEK and meet friendly associates who know fit, material strength, and what bag suits your airline luggage rule.</p>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="sleek-local-card p-3 bg-white rounded-3 border">
+                <strong class="font-display d-block mb-1">100% Genuine</strong>
+                <p class="small text-muted mb-0">Direct from vetted suppliers. Every seam checked before display.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="sleek-local-card p-3 bg-white rounded-3 border">
+                <strong class="font-display d-block mb-1">Wide Collection</strong>
+                <p class="small text-muted mb-0">400+ seasonal variations across formals, sneakers & trolleys.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="sleek-local-card p-3 bg-white rounded-3 border">
+                <strong class="font-display d-block mb-1">Great Prices</strong>
+                <p class="small text-muted mb-0">Honest family-friendly retail pricing without unnecessary markups.</p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="sleek-local-card p-3 bg-white rounded-3 border">
+                <strong class="font-display d-block mb-1">Friendly Support</strong>
+                <p class="small text-muted mb-0">Air-conditioned spacious trial zones with no aggressive sales pressure.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="sleek-local-moments" aria-label="SLEEK image moments">
+        <div class="sleek-local-moments-track">
+          <span class="sleek-local-moment-label">SLEEK MOMENTS</span>
+          <span class="sleek-local-moment-image"><img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" alt="SLEEK footwear detail" loading="lazy"></span>
+          <span class="sleek-local-moment-image"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=320&q=80" alt="Travel backpack detail" loading="lazy" onerror="this.onerror=null;this.src='ChatGPT Image Sep 14, 2026, 05_36_57 AM.png';"></span>
+          <span class="sleek-local-moment-image"><img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" alt="SLEEK luggage detail" loading="lazy"></span>
+          <span class="sleek-local-moment-image"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=320&q=80" alt="White sneaker detail" loading="lazy" onerror="this.onerror=null;this.src='ChatGPT Image Sep 14, 2026, 05_36_11 AM.png';"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       09 / STORE INVITATION & LIVE GOOGLE MAP EMBED
+       ========================================================================== -->
+  <section id="store" class="py-5 text-white position-relative" style="background-color: var(--color-ink);">
+    <div class="container py-lg-4">
+      
+      <div class="p-4 p-md-5 rounded-4 shadow-lg border border-white-50" style="background: #171f19;">
+        <div class="row g-5 align-items-center">
+          
+          <div class="col-lg-6">
+            <div class="d-inline-flex align-items-center gap-2 font-monospace fw-bold mb-3" style="color: var(--color-lime); font-size: 0.75rem;">
+              <span class="rounded-circle d-inline-block" style="width: 6px; height: 6px; background: var(--color-lime);"></span>
+              05 / FLAGSHIP STORE INVITATION
+            </div>
+
+            <h2 class="font-display fw-bolder text-uppercase" style="font-size: clamp(2rem, 4vw, 3.2rem);">Visit our flagship on Bangalore Road.</h2>
+            <p class="text-white-50 lead mb-4">Try shoes on hard tiles, check luggage wheel drag, and meet our in-store team.</p>
+
+            <div class="p-4 rounded-3 mb-4" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);">
+              <div class="d-flex align-items-start gap-3">
+                <div class="p-2 rounded-2 text-dark" style="background: var(--color-lime);">
+                  <i data-lucide="map-pin" style="width: 22px; height: 22px;"></i>
+                </div>
+                <div>
+                  <h4 class="font-display fw-bold h5 text-white mb-1">SLEEK, Krishnagiri</h4>
+                  <p class="small text-white-50 mb-2">179, Bangalore Rd, PTU Colony, Veerappa Nagar,<br>Krishnagiri, Tamil Nadu 635002</p>
+                  <span class="small font-monospace" style="color: var(--color-lime);"><i class="bi bi-clock me-1"></i> Mon - Sun: 9:30 AM – 9:30 PM · Dedicated Parking</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-3">
+              <a href="https://maps.google.com/?q=179+Bangalore+Rd+PTU+Colony+Veerappa+Nagar+Krishnagiri+Tamil+Nadu+635002" target="_blank" class="btn-lime">
+                <i data-lucide="navigation" style="width: 18px; height: 18px;"></i>
+                <span>Get Directions via Google Maps</span>
+              </a>
+              <button class="btn-sleek-outline-white" data-bs-toggle="offcanvas" data-bs-target="#trialBagOffcanvas">
+                <span>View Reserved Pieces</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="rounded-3 overflow-hidden shadow border border-white-50">
+              <iframe 
+                title="SLEEK Flagship Krishnagiri Map"
+                src="https://maps.google.com/maps?q=179%20Bangalore%20Rd%2C%20PTU%20Colony%2C%20Veerappa%20Nagar%2C%20Krishnagiri%2C%20Tamil%20Nadu%20635002&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                class="w-100" 
+                style="height: 340px; border: 0;"
+                loading="lazy">
+              </iframe>
+              <div class="p-3 d-flex justify-content-between align-items-center" style="background: #111613;">
+                <span class="small font-monospace text-white-50">Near PTU Colony Arch · 5 mins from Bus Stand</span>
+                <span class="font-hand text-warning" style="font-size: 1.3rem;">Easy Parking!</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       10 / FOOTER
+       ========================================================================== -->
+  <footer class="py-5 text-white-50 border-top border-white-50" style="background-color: #0b0e0c;">
+    <div class="container py-lg-4">
+      <div class="row g-4 mb-5 pb-4 border-bottom border-secondary">
+        
+        <div class="col-lg-4">
+          <span class="font-display fw-bolder text-white h3 d-block">SLEEK<span style="color: var(--color-lime);">®</span></span>
+          <span class="small font-monospace text-uppercase d-block mb-3" style="color: var(--color-olive);">Footwear & Luggages · Krishnagiri</span>
+          <p class="small">Curated shoes, bags, and luggage engineered to make everyday movement effortless and confident.</p>
+          <span class="font-hand fs-4" style="color: var(--color-lime);">“Style travels with you.”</span>
+        </div>
+
+        <div class="col-6 col-lg-2">
+          <h5 class="font-monospace small text-white text-uppercase fw-bold mb-3">Categories</h5>
+          <ul class="list-unstyled small d-flex flex-column gap-2">
+            <li><a href="#footwear" class="text-white-50 text-decoration-none">Daily Footwear</a></li>
+            <li><a href="#handbags" class="text-white-50 text-decoration-none">Fashion Handbags</a></li>
+            <li><a href="#luggage" class="text-white-50 text-decoration-none">Travel Luggage</a></li>
+            <li><a href="#backpacks" class="text-white-50 text-decoration-none">Commuter Packs</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <h5 class="font-monospace small text-white text-uppercase fw-bold mb-3">Krishnagiri Store</h5>
+          <p class="small text-white-50 mb-2">179, Bangalore Rd, PTU Colony, Veerappa Nagar, Krishnagiri, Tamil Nadu 635002</p>
+          <span class="small font-monospace" style="color: var(--color-lime);">Open Daily: 9:30 AM – 9:30 PM</span>
+        </div>
+
+        <div class="col-lg-3">
+          <h5 class="font-monospace small text-white text-uppercase fw-bold mb-3">Drop Alerts</h5>
+          <p class="small text-white-50 mb-3">Get notified about seasonal footwear and festive bag arrivals.</p>
+          <form onsubmit="event.preventDefault(); alert('Subscribed! Welcome to SLEEK Krishnagiri.');" class="d-flex">
+            <input type="email" placeholder="Your email address" required class="form-control form-control-sm bg-dark text-white border-secondary rounded-start-pill px-3">
+            <button class="btn btn-sm rounded-end-pill px-3 fw-bold" style="background: var(--color-lime); color: var(--color-ink);">↗</button>
+          </form>
+        </div>
+
+      </div>
+
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center small font-monospace">
+        <span>© 2026 SLEEK® Footwear & Luggages, Krishnagiri. All rights reserved.</span>
+        <div class="d-flex gap-3 mt-2 mt-sm-0">
+          <a href="#" class="text-white-50 text-decoration-none">Privacy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms</a>
+          <a href="#store" class="text-decoration-none" style="color: var(--color-lime);">Directions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       BOOTSTRAP OFFCANVAS & MODALS
+       ========================================================================== -->
+
+  <!-- Offcanvas: Mobile Nav -->
+  <div class="offcanvas offcanvas-start offcanvas-sleek p-3" tabindex="-1" id="mobileNavOffcanvas">
+    <div class="offcanvas-header border-bottom border-secondary pb-3">
+      <h5 class="offcanvas-title font-display fw-bold" style="color: var(--color-lime);">SLEEK KRISHNAGIRI</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between pt-4">
+      <nav class="d-flex flex-column gap-3 font-display fs-3 fw-bold text-uppercase">
+        <a href="#front-reels" data-bs-dismiss="offcanvas" class="text-warning text-decoration-none">Live Videos 📹</a>
+        <a href="#footwear" data-bs-dismiss="offcanvas" class="text-white text-decoration-none">Footwear</a>
+        <a href="#handbags" data-bs-dismiss="offcanvas" class="text-white text-decoration-none">Handbags</a>
+        <a href="#luggage" data-bs-dismiss="offcanvas" class="text-white text-decoration-none">Luggage</a>
+        <a href="#backpacks" data-bs-dismiss="offcanvas" class="text-white text-decoration-none">Backpacks</a>
+        <a href="#store" data-bs-dismiss="offcanvas" class="text-decoration-none" style="color: var(--color-lime);">Visit Store ↗</a>
+      </nav>
+      <div class="pt-4 border-top border-secondary">
+        <span class="small font-monospace text-muted d-block mb-1">LOCATION</span>
+        <p class="small text-white-50 mb-3">179, Bangalore Rd, PTU Colony, Veerappa Nagar, Krishnagiri</p>
+        <a href="https://maps.google.com/?q=179+Bangalore+Rd+PTU+Colony+Veerappa+Nagar+Krishnagiri+Tamil+Nadu+635002" target="_blank" class="btn-lime w-100 text-center">Open Map Directions</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas: In-Store Trial Bag -->
+  <div class="offcanvas offcanvas-end offcanvas-sleek p-3" tabindex="-1" id="trialBagOffcanvas">
+    <div class="offcanvas-header border-bottom border-secondary pb-3">
+      <div class="d-flex align-items-center gap-2">
+        <i data-lucide="shopping-bag" style="color: var(--color-lime);"></i>
+        <h5 class="offcanvas-title font-display fw-bold text-white mb-0">In-Store Trial List</h5>
+      </div>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between pt-4">
+      <div>
+        <span class="small font-monospace text-muted d-block mb-3">ITEMS SAVED FOR YOUR VISIT:</span>
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex align-items-center gap-3 p-2 bg-dark rounded-3 border border-secondary">
+            <img src="ChatGPT Image Sep 14, 2026, 05_36_11 AM.png" class="rounded object-fit-cover" style="width: 50px; height: 50px;" alt="Sneaker">
+            <div class="flex-grow-1">
+              <strong class="d-block small text-white">SLEEK Urban Walker</strong>
+              <span class="text-muted small">Sneaker · Size 8</span>
+            </div>
+            <span class="small text-success font-monospace">Ready</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-3 p-2 bg-dark rounded-3 border border-secondary">
+            <img src="ChatGPT Image Sep 14, 2026, 05_36_56 AM.png" class="rounded object-fit-cover" style="width: 50px; height: 50px;" alt="Trolley">
+            <div class="flex-grow-1">
+              <strong class="d-block small text-white">AeroGlide 360° Spinner</strong>
+              <span class="text-muted small">Cabin Trolley · Hardshell</span>
+            </div>
+            <span class="small text-success font-monospace">Ready</span>
+          </div>
+
+          <div class="d-flex align-items-center gap-3 p-2 bg-dark rounded-3 border border-secondary">
+            <img src="ChatGPT Image Sep 14, 2026, 05_36_32 AM.png" class="rounded object-fit-cover" style="width: 50px; height: 50px;" alt="Satchel">
+            <div class="flex-grow-1">
+              <strong class="d-block small text-white">Structured Daily Satchel</strong>
+              <span class="text-muted small">Handbag · Sand Tone</span>
+            </div>
+            <span class="small text-success font-monospace">Ready</span>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top border-secondary">
+          <label for="visitDrop" class="small font-monospace text-muted mb-1 d-block">Estimated Visit Time:</label>
+          <select id="visitDrop" class="form-select form-select-sm bg-dark text-white border-secondary">
+            <option value="Today Evening (5:00 PM – 9:00 PM)">Today Evening (5:00 PM – 9:00 PM)</option>
+            <option value="Tomorrow Morning (10:00 AM – 1:00 PM)">Tomorrow Morning (10:00 AM – 1:00 PM)</option>
+            <option value="This Weekend">This Weekend</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pt-4 border-top border-secondary">
+        <button onclick="dispatchTrialWhatsApp()" class="btn-lime w-100 py-2.5">
+          <span>Send Trial Request to Store</span>
+          <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+        </button>
+        <span class="small font-monospace text-muted d-block text-center mt-2" style="font-size: 0.7rem;">Staff will set aside these sizes for your arrival.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Airline Sizer -->
+  <div class="modal fade" id="luggageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-sleek p-3 p-md-4">
+        <div class="modal-header border-secondary pb-3">
+          <h5 class="modal-title font-display text-white">✈️ Airline Cabin Sizer Guide</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-3">
+          <p class="small text-white-50">Compare our AeroGlide 360° Cabin piece against airlines flying from Bangalore (BLR) and Chennai (MAA):</p>
+          <div class="row g-2 text-center my-3">
+            <div class="col-4">
+              <div class="p-2 bg-dark rounded border border-secondary">
+                <strong class="d-block small" style="color: var(--color-lime);">IndiGo</strong>
+                <span class="font-monospace small text-white-50" style="font-size: 0.7rem;">55×35×25 cm</span>
+                <span class="d-block text-success fw-bold" style="font-size: 0.65rem;">✓ Fits</span>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-2 bg-dark rounded border border-secondary">
+                <strong class="d-block small" style="color: var(--color-lime);">Air India</strong>
+                <span class="font-monospace small text-white-50" style="font-size: 0.7rem;">55×35×25 cm</span>
+                <span class="d-block text-success fw-bold" style="font-size: 0.65rem;">✓ Fits</span>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-2 bg-dark rounded border border-secondary">
+                <strong class="d-block small" style="color: var(--color-lime);">Emirates</strong>
+                <span class="font-monospace small text-white-50" style="font-size: 0.7rem;">55×38×20 cm</span>
+                <span class="d-block text-success fw-bold" style="font-size: 0.65rem;">✓ Fits</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 bg-dark rounded border border-secondary small text-white-50">
+            <strong>In-Store Fit Trial:</strong> Bring your checklist to 179 Bangalore Rd to check weight balance and trolley handle height in person.
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn-lime w-100 py-2" data-bs-dismiss="modal">Return to Store</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: WhatsApp Stock Check -->
+  <div class="modal fade" id="waInquiryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content modal-content-sleek p-3">
+        <div class="modal-header border-secondary pb-2">
+          <h6 class="modal-title font-display text-white">Krishnagiri Store Desk</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-2">
+          <span class="small font-monospace text-muted d-block">INQUIRING FOR:</span>
+          <strong id="waItemName" class="d-block text-white mb-3">Product Name</strong>
+
+          <label for="waSizePref" class="small font-monospace text-muted d-block mb-1">Your Size or Color Preference:</label>
+          <input type="text" id="waSizePref" placeholder="e.g. Size 8 / Olive" class="form-control form-control-sm bg-dark text-white border-secondary mb-3">
+
+          <button onclick="sendProductWhatsApp()" class="btn-lime w-100 py-2">
+            <span>Send via WhatsApp</span>
+            <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ==========================================================================
+       CHOREOGRAPHY LOGIC: AUDIO, VIDEOS & GSAP
+       ========================================================================== -->
+  <script>
+    lucide.createIcons();
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.fromTo(".sleek-promise-top", { y: -18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.34, ease: "power3.out" });
+      gsap.fromTo(".sleek-promise-bottom", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.34, delay: 0.08, ease: "power3.out" });
+    }
+
+    // 1. GSAP Hero Entrance Animations
+    gsap.from(".hero-line", {
+      y: 40,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.5,
+      ease: "power3.out"
+    });
+    gsap.from(".hero-subtext, .hero-actions", {
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      delay: 0.35,
+      ease: "power3.out"
+    });
+
+    gsap.utils.toArray(".gsap-card").forEach((card, i) => {
+      gsap.from(card, {
+        scrollTrigger: { trigger: card, start: "top 88%" },
+        y: 35,
+        opacity: 0,
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "power2.out"
+      });
+    });
+
+    // 2. Front-Page Triple Video Controller with Audio
+    let isSoundEnabled = false;
+    let activeReelIndex = 1;
+    const v1 = document.getElementById('vidReel1');
+    const v2 = document.getElementById('vidReel2');
+    const v3 = document.getElementById('vidReel3');
+    const reels = [v1, v2, v3];
+
+    const masterSoundToggle = document.getElementById('masterSoundToggle');
+    const masterSoundIcon = document.getElementById('masterSoundIcon');
+    const masterSoundLabel = document.getElementById('masterSoundLabel');
+    const soundWaves = document.getElementById('soundWaves');
+
+    function applyAudioState() {
+      reels.forEach((vid, idx) => {
+        if (!vid) return;
+        if (isSoundEnabled && (idx + 1) === activeReelIndex) {
+          vid.muted = false;
+          gsap.to(vid, { volume: 1, duration: 0.28, ease: "power3.out" });
+        } else {
+          gsap.to(vid, {
+            volume: 0,
+            duration: 0.24,
+            ease: "power2.in",
+            onComplete: () => { vid.muted = true; }
+          });
+        }
+      });
+
+      if (isSoundEnabled) {
+        masterSoundIcon.className = "bi bi-volume-up-fill fs-6 text-dark";
+        masterSoundLabel.textContent = `VOICE ACTIVE: VIDEO 0${activeReelIndex}`;
+        soundWaves.classList.remove('equalizer-paused');
+      } else {
+        masterSoundIcon.className = "bi bi-volume-mute-fill fs-6";
+        masterSoundLabel.textContent = "ENABLE IN-STORE VOICE / AUDIO";
+        soundWaves.classList.add('equalizer-paused');
+      }
+
+      // Update card UI indicators
+      for (let i = 1; i <= 3; i++) {
+        const card = document.getElementById(`cardReel${i}`);
+        const indicator = card.querySelector('.sound-indicator');
+        if (i === activeReelIndex) {
+          card.classList.add('active-stream');
+          gsap.fromTo(card, { scale: 1 }, { scale: 1.02, duration: 0.16, yoyo: true, repeat: 1, ease: "power1.out", overwrite: true });
+          if (isSoundEnabled) {
+            indicator.innerHTML = `<i class="bi bi-volume-up-fill text-warning me-1"></i> VOICE PLAYING`;
+          } else {
+            indicator.innerHTML = `<i class="bi bi-volume-up-fill text-warning me-1"></i> SOUND READY`;
+          }
+        } else {
+          card.classList.remove('active-stream');
+          indicator.innerHTML = `<i class="bi bi-volume-mute-fill text-muted me-1"></i> CLICK TO HEAR`;
+        }
+      }
+    }
+
+    masterSoundToggle.addEventListener('click', () => {
+      isSoundEnabled = !isSoundEnabled;
+      // Trigger play to satisfy user gesture policy
+      reels.forEach(v => v.play().catch(() => {}));
+      applyAudioState();
+    });
+
+    function selectVideoReel(index) {
+      activeReelIndex = index;
+      isSoundEnabled = true; // Auto-activate sound on direct click
+      reels.forEach(v => v.play().catch(() => {}));
+      applyAudioState();
+    }
+
+    // Auto-update video progress indicator bars
+    reels.forEach((vid, index) => {
+      vid.addEventListener('timeupdate', () => {
+        const prog = document.getElementById(`prog${index + 1}`);
+        if (prog && vid.duration) {
+          const pct = (vid.currentTime / vid.duration) * 100;
+          prog.style.width = pct + '%';
+        }
+      });
+    });
+
+    // 3. Supplemental Video Lab Switcher
+    const clipBtns = document.querySelectorAll(".clip-btn");
+    const stageVideo = document.getElementById("stageVideo");
+    const videoBadge = document.getElementById("videoBadge");
+    const videoTitle = document.getElementById("videoTitle");
+    const videoDesc = document.getElementById("videoDesc");
+    const playBtn = document.getElementById("playBtn");
+    const playIcon = document.getElementById("playIcon");
+    const muteBtn = document.getElementById("muteBtn");
+    const muteIcon = document.getElementById("muteIcon");
+
+    clipBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        clipBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        gsap.to("#motionLabWrapper", {
+          opacity: 0.5,
+          duration: 0.15,
+          onComplete: () => {
+            stageVideo.pause();
+            stageVideo.poster = btn.getAttribute("data-poster");
+            stageVideo.src = btn.getAttribute("data-src");
+            stageVideo.load();
+            stageVideo.play().catch(() => {});
+
+            videoBadge.textContent = btn.getAttribute("data-badge");
+            videoTitle.textContent = btn.getAttribute("data-title");
+            videoDesc.textContent = btn.getAttribute("data-desc");
+
+            playIcon.className = "bi bi-pause-fill fs-3";
+            gsap.to("#motionLabWrapper", { opacity: 1, duration: 0.2 });
+          }
+        });
+      });
+    });
+
+    playBtn?.addEventListener("click", () => {
+      if (stageVideo.paused) {
+        stageVideo.play();
+        playIcon.className = "bi bi-pause-fill fs-3";
+      } else {
+        stageVideo.pause();
+        playIcon.className = "bi bi-play-fill fs-3";
+      }
+    });
+
+    muteBtn?.addEventListener("click", () => {
+      stageVideo.muted = !stageVideo.muted;
+      muteIcon.className = stageVideo.muted ? "bi bi-volume-mute-fill" : "bi bi-volume-up-fill text-warning";
+    });
+
+    // 4. Live IST Krishnagiri Store Hours (9:30 AM to 9:30 PM IST)
+    function calculateStoreHours() {
+      const now = new Date();
+      const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const istTime = new Date(utcTime + (3600000 * 5.5));
+      
+      const currentTimeInMins = (istTime.getHours() * 60) + istTime.getMinutes();
+      const openMins = (9 * 60) + 30;   // 9:30 AM
+      const closeMins = (21 * 60) + 30; // 9:30 PM
+
+      const dot = document.getElementById("storePulseDot");
+      const label = document.getElementById("storeStatusLabel");
+
+      if (currentTimeInMins >= openMins && currentTimeInMins < closeMins) {
+        dot.style.background = "#16a34a";
+        label.innerHTML = `<span style="color:#15803d;">FLAGSHIP STORE OPEN NOW</span> · CLOSES AT 9:30 PM`;
+      } else {
+        dot.style.background = "#d97706";
+        label.innerHTML = `<span style="color:#b45309;">STORE CURRENTLY CLOSED</span> · OPENS AT 9:30 AM`;
+      }
+    }
+    calculateStoreHours();
+    setInterval(calculateStoreHours, 60000);
+
+    // 5. Category Product Filtering
+    const filterPills = document.querySelectorAll(".filter-pill");
+    const productItems = document.querySelectorAll(".product-item");
+
+    filterPills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        filterPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+
+        const category = pill.getAttribute("data-cat");
+        productItems.forEach(item => {
+          if (category === "all" || item.getAttribute("data-category") === category) {
+            item.style.display = "block";
+            gsap.fromTo(item, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.3 });
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // 6. Modals & WhatsApp Inquiries
+    const luggageModal = new bootstrap.Modal(document.getElementById('luggageModal'));
+    function openLuggageSizer() { luggageModal.show(); }
+
+    const waModal = new bootstrap.Modal(document.getElementById('waInquiryModal'));
+    let activeProductInquiry = "";
+
+    function inquireOnWhatsApp(productName, category) {
+      activeProductInquiry = productName;
+      document.getElementById('waItemName').textContent = productName + " (" + category + ")";
+      document.getElementById('waSizePref').value = "";
+      waModal.show();
+    }
+
+    function sendProductWhatsApp() {
+      const pref = document.getElementById('waSizePref').value.trim() || "Standard Fit";
+      const message = encodeURIComponent(`Hello SLEEK Krishnagiri, I am viewing *${activeProductInquiry}* on your website and would like to check if size/preference: ${pref} is in stock at 179 Bangalore Road.`);
+      window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+      waModal.hide();
+    }
+
+    function dispatchTrialWhatsApp() {
+      const time = document.getElementById('visitDrop').value;
+      const text = encodeURIComponent(`Hi SLEEK Krishnagiri, I have saved 3 items to try at your Bangalore Road store (Urban Walker Sneaker, AeroGlide Spinner, Daily Satchel). I will visit around: ${time}. Please set them aside.`);
+      window.open(`https://wa.me/919876543210?text=${text}`, '_blank');
+    }
+
+    function expandActiveReelModal() {
+      const activeVideo = reels[activeReelIndex - 1];
+      if (activeVideo && activeVideo.requestFullscreen) {
+        activeVideo.requestFullscreen();
+      }
+    }
+
+    // Reference-page editorial motion, intentionally scoped to index.html.
+    (() => {
+      const localPage = document.querySelector(".sleek-local-page");
+      const trustSection = localPage?.querySelector(".sleek-local-trust");
+      if (!localPage || !trustSection || typeof gsap === "undefined") return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const mainImage = trustSection.querySelector(".sleek-local-image-main");
+      const secondaryImage = trustSection.querySelector(".sleek-local-image-secondary");
+      const momentImage = trustSection.querySelector(".sleek-local-image-moment");
+      const headingLines = trustSection.querySelectorAll(".sleek-local-heading-line");
+      const story = trustSection.querySelector(".sleek-local-story");
+      const cards = trustSection.querySelectorAll(".sleek-local-card");
+      const momentsTrack = trustSection.querySelector(".sleek-local-moments-track");
+
+      if (!reduceMotion) {
+        gsap.timeline({ defaults: { ease: "power3.out" } })
+          .from(mainImage, { clipPath: "inset(0 100% 0 0)", opacity: 0, duration: 0.5 })
+          .from(secondaryImage, { x: 34, y: -18, rotation: 6, opacity: 0, duration: 0.42 }, "-=0.24")
+          .from(momentImage, { x: 24, y: 18, scale: 0.92, opacity: 0, duration: 0.38 }, "-=0.2")
+          .from(headingLines, { clipPath: "inset(0 0 100% 0)", y: 18, opacity: 0, stagger: 0.1, duration: 0.4 }, "-=0.12")
+          .from(story, { y: 18, opacity: 0, duration: 0.38 }, "-=0.16")
+          .from(cards, { y: 18, opacity: 0, stagger: 0.08, duration: 0.32 }, "-=0.12");
+
+        gsap.to(mainImage, {
+          y: -24,
+          scrollTrigger: { trigger: trustSection, start: "top bottom", end: "bottom top", scrub: 1.2 }
+        });
+        gsap.to(secondaryImage, {
+          y: 18,
+          scrollTrigger: { trigger: trustSection, start: "top bottom", end: "bottom top", scrub: 1.4 }
+        });
+        gsap.to(momentImage, {
+          y: -10,
+          scrollTrigger: { trigger: trustSection, start: "top bottom", end: "bottom top", scrub: 1.6 }
+        });
+
+        if (momentsTrack) {
+          const original = Array.from(momentsTrack.children);
+          original.forEach((item) => momentsTrack.appendChild(item.cloneNode(true)));
+          const marqueeTween = gsap.to(momentsTrack, { xPercent: -50, duration: 28, repeat: -1, ease: "none" });
+          momentsTrack.parentElement.addEventListener("mouseenter", () => marqueeTween.pause());
+          momentsTrack.parentElement.addEventListener("mouseleave", () => marqueeTween.resume());
+          momentsTrack.parentElement.addEventListener("focusin", () => marqueeTween.pause());
+          momentsTrack.parentElement.addEventListener("focusout", () => marqueeTween.resume());
+        }
+      }
+    })();
+  </script>
+  <!-- Link the custom motion engine -->
+  <script src="motion.js"></script>
+</body>
+</html>
